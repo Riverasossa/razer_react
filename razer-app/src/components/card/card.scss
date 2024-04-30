@@ -1,0 +1,77 @@
+.card-img,
+.card-img-top {
+  background-color: $card-content-background-image-color;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+}
+
+p {
+  color: $card-content-description-color;
+}
+
+.list-group-item {
+  color: $card-content-title-color;
+}
+
+.cards-wrapper {
+  display: flex;
+  margin: 2rem;
+}
+
+.card-body {
+  color: $card-content-title-color;
+  background-color: $card-content-background-color;
+  height: 250px;
+  text-align: justify;
+  justify-content: space-between;
+}
+
+#product-name {
+  color: $card-content-title-color;
+}
+
+.btn-primary {
+  bottom: 30px;
+  font-weight: bold;
+  border-color: $color-green;
+  color: $btn-font-color;
+  background-color: $color-green;
+  --bs-btn-active-bg: rgb(59, 58, 58);
+  --bs-btn-active-border-color: none;
+  &:hover,
+  &:active,
+  &:focus {
+    border-color: $color-green;
+    background-color: $color-green;
+    color: $card-content-title-color;
+  }
+  &--outline-success {
+    border-color: $color-green;
+    color: $color-green;
+
+    &:hover {
+      background-color: $color-green;
+      color: $btn-font-color;
+    }
+  }
+}
+
+#carousel-btn {
+  position: absolute;
+  bottom: 20px;
+}
+
+.card-group > .card {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: black;
+  background-color: black;
+  max-width: 350px;
+  display: flex;
+}
+
+.card-group {
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: inherit;
+}

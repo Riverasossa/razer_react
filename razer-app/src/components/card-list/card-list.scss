@@ -1,0 +1,77 @@
+.card-img,
+.card-img-top {
+  background-color: #111;
+  max-width: 350px;
+  align-self: center;
+}
+
+#list-card-img {
+  @include for-tablet {
+    background-color: black;
+  }
+}
+
+p {
+  color: $card-content-description-color;
+}
+
+.list-group-item {
+  color: $card-content-title-color;
+}
+
+.cards-wrapper {
+  display: flex;
+  margin: 2rem;
+}
+
+#list-card-body {
+  color: $card-content-title-color;
+  background-color: black;
+  height: auto;
+  text-align: justify;
+  justify-content: space-between;
+}
+
+#product-name {
+  color: $card-content-title-color;
+}
+
+#card-btn {
+  position: static;
+}
+
+.card-btn-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-around;
+
+  @include for-tablet {
+    grid-template-columns: auto;
+    gap: 10px;
+  }
+
+  @include for-desktop {
+    grid-template-columns: auto auto;
+  }
+}
+
+#list-card {
+  background-color: $card-content-background-image-color;
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  max-width: 400px;
+
+  @include for-tablet {
+    background-color: black;
+    flex-direction: row;
+    height: auto;
+    max-width: none;
+  }
+}
+
+.card-group {
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: inherit;
+}

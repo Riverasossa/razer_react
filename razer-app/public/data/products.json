@@ -1,0 +1,163 @@
+{
+  "Products": [
+    {
+      "id": 1,
+      "name": "New Razer Blade 14",
+      "category": "Laptop",
+      "price": "2,159.99",
+      "summary": "NVIDIA® GeForce RTX™ 40 Series 14” Laptop with AMD Ryzen 9 7940HS Processor",
+      "image": "images/products/blade14.png"
+    },
+    {
+      "id": 2,
+      "name": "Razer Blade 15 (2023)",
+      "category": "Laptop",
+      "price": "2,599.99",
+      "summary": "15.6” QHD 240Hz, Intel Core i7-10875H, NVIDIA GeForce RTX 3070, 16GB RAM, 1TB SSD",
+      "image": "images/products/blade15.png"
+    },
+    {
+      "id": 3,
+      "name": "Razer BlackWidow V3 Pro",
+      "category": "Keyboard",
+      "price": "229.99",
+      "summary": "Wireless Mechanical Gaming Keyboard, Razer Green Switches, Chroma RGB Lighting",
+      "image": "images/products/blackwidowv3pro.png"
+    },
+    {
+      "id": 4,
+      "name": "Razer DeathAdder V3 Pro",
+      "category": "Mouse",
+      "price": "159.99",
+      "summary": "Wireless Gaming Mouse, Razer Focus+ Optical Sensor, 20K DPI, 70 Hours of Battery Life",
+      "image": "images/products/dav3pro.png"
+    },
+    {
+      "id": 5,
+      "name": "Razer Kraken V3 Pro ",
+      "category": "Headset",
+      "price": "199.99",
+      "summary": "THX Spatial Audio, Cooling Gel-Infused Cushions, 2.4GHz Wireless Audio",
+      "image": "images/products/krakenv3pro.png"
+    },
+    {
+      "id": 6,
+      "name": "New Razer Blade 18",
+      "category": "Laptop",
+      "price": "3,099.99",
+      "summary": "NVIDIA® GeForce RTX™ 40 Series 14” Laptop with AMD Ryzen 9 7940HS Processor",
+      "image": "images/products/blade18.png"
+    },
+    {
+      "id": 7,
+      "name": "Razer Huntsman V2",
+      "category": "Keyboard",
+      "price": "249.99",
+      "summary": "Analog Optical Switches, Doubleshot PBT Keycaps, Razer Chroma RGB, Plush Wrist Rest",
+      "image": "images/products/huntsmanv2analog.png"
+    },
+    {
+      "id": 8,
+      "name": "Razer Viper V2 Pro",
+      "category": "Mouse",
+      "price": "149.99",
+      "summary": "Wireless Gaming Mouse, Razer Hyperspeed Wireless Technology, Focus+ Optical Sensor, 20K DPI",
+      "image": "images/products/viperv2pro.png"
+    },
+    {
+      "id": 9,
+      "name": "Razer Kraken X",
+      "category": "Headset",
+      "price": "49.99",
+      "summary": "Ultra-light Gaming Headset, 7.1 Surround Sound, Bendable Cardioid Microphone",
+      "image": "images/products/krakenv3x.png"
+    },
+    {
+      "id": 10,
+      "name": "Razer Basilisk V3 Pro",
+      "category": "Mouse",
+      "price": "169.99",
+      "summary": "Wireless Gaming Mouse, Razer Hyperspeed Wireless Technology, Focus+ Optical Sensor, 20K DPI",
+      "image": "images/products/basiliskv3pro.png"
+    },
+    {
+      "id": 11,
+      "name": "Razer BlackShark V2 X",
+      "category": "Headset",
+      "price": "99.99",
+      "summary": "Wired Esports Gaming Headset, THX Spatial Audio, TriForce Titanium 50mm Drivers",
+      "image": "images/products/blacksharkv2.png"
+    },
+    {
+      "id": 12,
+      "name": "Razer Barracuda Pro",
+      "category": "Headset",
+      "price": "249.99",
+      "summary": "Wireless Gaming Headset, THX Spatial Audio, Custom-Tuned 50mm Drivers",
+      "image": "images/products/barracudapro.png"
+    },
+    {
+      "id": 13,
+      "name": "Razer BlackWidow Mini",
+      "category": "Keyboard",
+      "price": "179.99",
+      "summary": "Wireless Mechanical Gaming Keyboard, Razer Yellow Mechanical Switches, Doubleshot ABS Keycaps",
+      "image": "images/products/blackwidowv3mini.png"
+    },
+    {
+      "id": 14,
+      "name": "Razer Orochi V2",
+      "category": "Mouse",
+      "price": "69.99",
+      "summary": "Wireless Gaming Mouse, Razer HyperSpeed Wireless Technology, 5G Advanced Optical Sensor",
+      "image": "images/products/orochiv2.png"
+    },
+    {
+      "id": 15,
+      "name": "Razer DeathAdder",
+      "category": "Mouse",
+      "price": "49.99",
+      "summary": "Wired Gaming Mouse, 6400 DPI Optical Sensor, Mechanical Switches, 5 Programmable Buttons",
+      "image": "images/products/deathadderessential.png"
+    },
+    {
+      "id": 16,
+      "name": "Razer Huntsman Mini",
+      "category": "Keyboard",
+      "price": "119.99",
+      "summary": "60% Optical Gaming Keyboard, Razer Clicky Optical Switches, Doubleshot PBT Keycaps",
+      "image": "images/products/huntsmanmini.png"
+    },
+    {
+      "id": 17,
+      "name": "Razer Blade 17",
+      "category": "Laptop",
+      "price": "1,799.99",
+      "summary": "17.3” 4K Touch Display, Intel Core i7-1165G7, NVIDIA GeForce RTX 4070 Ti, 16GB RAM, 512GB SSD",
+      "image": "images/products/blade17.png"
+    },
+    {
+      "id": 18,
+      "name": "Razer BlackShark V2 Pro",
+      "category": "Headset",
+      "price": "179.99",
+      "summary": "Wireless Esports Gaming Headset, THX 7.1 Spatial Surround Sound, Triforce Titanium 50mm Drivers",
+      "image": "images/products/blacksharkv2pro.png"
+    },
+    { "id": 19,
+    "name": "Razer Cobra Pro",
+    "category": "Mouse",
+    "price": "129.99",
+    "summary": "Razer™ HyperSpeed Wireless (2.4 GHz), Razer Chroma RGB, Bluetooth",
+    "image": "images/products/cobrapro.png"
+  },
+  {
+    "id": 20,
+    "name": "Razer Kraken Kitty V2",
+    "category": "Headset",
+    "price": "99.99",
+    "summary": "Wired Gaming Headset, THX Spatial Audio, Cooling Gel-Infused Ear Cushions",
+    "image": "images/products/krakenkittyv2.png"
+  }
+]
+}

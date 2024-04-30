@@ -1,0 +1,87 @@
+.carousel-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  gap: 20px;
+}
+
+.carousel-inner {
+  &__item {
+    > div {
+      display: none;
+    }
+
+    &.single-card {
+      &:first-child {
+        display: block;
+      }
+    }
+
+    &.multi-card {
+      display: flex;
+
+      > div {
+        display: block;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .carousel-inner {
+    &__item {
+      &.multi-card {
+        > div {
+          display: none;
+        }
+
+        &:nth-child(-n + 3) > div {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+.carousel-item {
+  justify-content: center;
+  padding: 20px;
+  padding-top: 5px;
+  text-align: -webkit-center;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+
+  @include for-desktop {
+    width: 6%;
+  }
+}
+
+.carousel-title {
+  color: $card-content-title-color;
+  padding-left: 30px;
+  padding-top: 2rem;
+}
+
+.disclaimer {
+  display: flex;
+  justify-content: space-between;
+
+  &__description {
+    padding-left: 30px;
+  }
+
+  &__link {
+    color: $color-green;
+    padding-right: 30px;
+  }
+}
+
+.carousel-indicators .active {
+  background-color: #2efc05;
+}

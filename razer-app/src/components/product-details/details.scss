@@ -1,0 +1,32 @@
+.details-container {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  margin-top: 80px;
+  grid-template-columns: auto;
+
+  @include for-tablet {
+    grid-template-columns: auto auto;
+  }
+}
+
+#product-name-details {
+  color: $color-green;
+}
+
+.img-details-container {
+  display: flex;
+  justify-content: center;
+}
+
+.info-details-container {
+  display: grid;
+  justify-content: center;
+  text-align: center;
+  align-content: center;
+  margin-right: 30px;
+  margin-left: 30px;
+
+  @include for-tablet {
+  }
+}

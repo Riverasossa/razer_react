@@ -1,0 +1,75 @@
+.filter-panel {
+  &__title {
+    color: $card-content-title-color;
+  }
+
+  &__label {
+    color: $footer-text-color;
+    font-weight: bold;
+    padding-top: 15px;
+  }
+}
+
+.form-control {
+  background-color: $card-content-background-image-color;
+  border-radius: 0%;
+  border-color: $card-content-description-color;
+  color: $card-content-description-color;
+  @include for-tablet {
+    max-width: 450px;
+  }
+}
+
+.form-control:focus {
+  background-color: $card-content-background-image-color;
+  border-color: $color-green;
+  box-shadow: 0 0 0 0.2rem #19491f;
+  color: $card-content-title-color;
+}
+
+.form-control::placeholder {
+  color: $card-icon-color;
+}
+
+label {
+  color: $card-content-description-color;
+}
+
+.form-check-input[type="checkbox"] {
+  background-color: $card-content-background-color;
+}
+
+.form-check-input:checked[type="checkbox"] {
+  background-color: $color-green;
+  border-color: $card-content-background-color;
+  box-shadow: 0 0 0 0.2rem #19491f;
+}
+
+.form-check-input:hover[type="checkbox"] {
+  box-shadow: 0 0 0 0.2rem #19491f;
+  border-color: $card-content-background-color;
+}
+
+#clear-btn {
+  position: static;
+  height: 30px;
+  font-size: small;
+  display: flex;
+  align-items: center;
+  margin: auto;
+
+  @include for-tablet {
+    margin: 0;
+    margin-top: 20px;
+  }
+}
+
+.checkbox-filter-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+
+  @include for-tablet {
+    display: block;
+  }
+}

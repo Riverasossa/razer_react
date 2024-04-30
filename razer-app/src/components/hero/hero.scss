@@ -1,0 +1,13 @@
+.hero {
+  display: grid;
+  grid-template-columns: auto;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/images/services-razer-id.jpg");
+  max-width: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  align-content: center;
+  height: 400px;
+  margin-top: 80px;
+}
