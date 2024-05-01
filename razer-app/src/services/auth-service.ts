@@ -22,7 +22,7 @@ export const useAuth = () => {
       if (foundUser) {
         setAuth({ isAuthenticated: true, user: { name: foundUser.username } });
       } else {
-        console.error("Invalid username or password");
+        throw new Error("Invalid username or password");
       }
     } catch (error) {
       console.error("Error logging in: ", error);

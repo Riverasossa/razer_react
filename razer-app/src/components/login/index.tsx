@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Alert, Modal } from "react-bootstrap";
 import { useAuth } from "../../services/auth-service";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate
+import { useNavigate } from "react-router-dom";
 import "./login.scss";
 import { User } from "../../models/user";
 
@@ -13,7 +13,7 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate(); // Obtén la función de navegación
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,15 +22,16 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       await login(formData);
+      // Si el login tiene éxito, mostramos el modal
       setShowModal(true);
     } catch (error) {
-      setError(error.message || "Error logging in. Please try again later.");
+      setError(error.message || "Error logging in. Please try again.");
     }
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-    navigate("/"); // Redirige a la página de inicio al cerrar el modal
+    navigate("/");
   };
 
   return (
