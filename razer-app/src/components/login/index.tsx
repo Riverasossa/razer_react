@@ -38,12 +38,12 @@ const Login = () => {
     <div className="login-background">
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Login Successful</Modal.Title>
+          <Modal.Title className="modal-bg">Login Successful</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="modal-bg">
           <p>Welcome Back, {formData.username}!</p>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="modal-bg">
           <Button variant="primary" onClick={handleCloseModal}>
             GO TO HOME PAGE
           </Button>

@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { ProductService } from "../../services/product-service"; // Importa el servicio ProductService
-import { Product } from "../../models/product"; // Importa el tipo de dato Product desde el modelo
+import { useParams, useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import { ProductService } from "../../services/product-service";
+import { Product } from "../../models/product";
+import { useCart } from "../../services/cart-service";
 import "./details.scss";
 
 const ProductDetailsPage = () => {
-  const [product, setProduct] = useState<Product | null>(null); // Especifica el tipo del estado product
-  const { id } = useParams<{ id: string }>(); // Asegúrate de que id sea siempre una cadena
+  const [product, setProduct] = useState<Product | null>(null);
+  const { id } = useParams<{ id: string }>();
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        if (!id) return; // Si id es undefined, no hagas la petición
+        if (!id) return;
 
-        const products = await ProductService.getProducts(); // Obtén la lista de productos usando el servicio
+        const products = await ProductService.getProducts();
         const foundProduct = products.find(
           (product) => product.id === parseInt(id)
-        ); // Encuentra el producto con el ID correspondiente
+        );
 
         if (foundProduct) {
           setProduct(foundProduct);
@@ -30,6 +34,17 @@ const ProductDetailsPage = () => {
 
     fetchProduct();
   }, [id]);
+
+  const handleAddToCart = () => {
+    if (!product) {
+      console.log("Product is empty");
+      return;
+    }
+
+    addToCart(product);
+    alert("Product added to cart!");
+    navigate("/cart");
+  };
 
   if (!product) {
     return <div>Loading...</div>;
@@ -45,7 +60,7 @@ const ProductDetailsPage = () => {
         />
       </div>
 
-      <div className="info-details-container ">
+      <div className="info-details-container">
         <h2 id="product-name-details">{product.name}</h2>
         <p>{product.summary}</p>
         <p>
@@ -54,6 +69,10 @@ const ProductDetailsPage = () => {
         <p>
           <strong>Price:</strong> ${product.price}
         </p>
+
+        <Button id="card-btn" variant="primary" onClick={handleAddToCart}>
+          ADD TO CART
+        </Button>
       </div>
     </div>
   );

@@ -49,7 +49,31 @@
 
 .dropdown {
   margin-left: 10px;
-  @include for-tablet {
+  background-color: $card-content-background-color;
+  width: fit-content;
+  @include for-desktop {
     margin-right: 50px;
+    width: auto;
+  }
+}
+
+.dropdown-btn {
+  color: $card-content-title-color;
+  background-color: $card-content-background-color;
+}
+
+.dropdown-menu {
+  background-color: $card-content-background-image-color;
+  width: -webkit-fill-available;
+}
+
+.dropdown-item {
+  background-color: $card-content-background-image-color;
+  color: $color-green;
+  text-align: center;
+
+  &:hover {
+    color: $card-content-title-color;
+    background-color: $card-content-background-image-color;
   }
 }

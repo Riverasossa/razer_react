@@ -16,13 +16,13 @@ export const useAuth = () => {
       // Validar el formato del correo electrónico
       const isValidEmail = validateEmail(user.username);
       if (!isValidEmail) {
-        throw new Error("Please enter a valid email address");
+        throw new Error("*Please enter a valid email address");
       }
 
       if (foundUser) {
         setAuth({ isAuthenticated: true, user: { name: foundUser.username } });
       } else {
-        throw new Error("Invalid username or password");
+        throw new Error("*Invalid username or password");
       }
     } catch (error) {
       console.error("Error logging in: ", error);

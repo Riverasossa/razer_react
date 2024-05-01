@@ -42,3 +42,28 @@
 #login-card-btn {
   width: 100px;
 }
+
+.alert-danger {
+  color: $color-green;
+  height: 37px;
+  align-content: center;
+  border: transparent;
+  background-color: transparent;
+}
+
+.modal-content {
+  background-color: $card-content-background-image-color;
+}
+
+.modal-header {
+  color: $card-content-title-color;
+  border: none;
+}
+
+.modal-footer {
+  border: none;
+}
+
+.modal-dialog {
+  margin-top: 30%;
+}

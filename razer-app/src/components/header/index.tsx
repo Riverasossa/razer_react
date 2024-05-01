@@ -55,7 +55,11 @@ const Header = () => {
               </Nav.Link>
             ) : (
               <Dropdown>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle
+                  className="dropdown-btn"
+                  variant="dark"
+                  id="dropdown-basic"
+                >
                   <i className="bi bi-person-fill"></i> {user.name}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

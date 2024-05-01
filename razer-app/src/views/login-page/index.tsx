@@ -3,7 +3,7 @@ import Login from "../../components/login"; // Importa el componente Login
 
 const LoginPage = () => {
   return (
-    <div className="login-page">
+    <div>
       <Login />
     </div>
   );

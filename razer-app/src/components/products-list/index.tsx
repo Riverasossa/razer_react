@@ -107,8 +107,7 @@ const ProductListPage: React.FC = () => {
       <div className="page-header">
         <h1 className="page-header__title">GAMING PRODUCTS</h1>
         <p className="page-header__description">
-          This page displays gaming-related products. Use the filters below to
-          refine your search.
+          Razer mice, keyboards, headsets, laptops & more
         </p>
       </div>
       <div className="product-list-container">

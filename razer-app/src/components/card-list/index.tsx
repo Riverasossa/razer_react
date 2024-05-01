@@ -6,7 +6,6 @@ import { Product } from "../../models/product";
 import "./card-list.scss";
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
-  console.log("image", product.image);
   return (
     <Card id="list-card" className="product-card">
       <Card.Img
