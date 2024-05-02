@@ -35,22 +35,28 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
 
   return (
     <div className="cart-item">
-      <div>
+      <img
+        src={`/${product.image}`}
+        alt="Product Image"
+        className="cart-item__image"
+      />
+      <div className="cart-item__info">
         <h5>{product.name}</h5>
         <p>Price: ${product.price}</p>
       </div>
-      <div>
+      <div className="cart-item__quantity-controls">
         <Form.Group>
           <Form.Label>Quantity:</Form.Label>
           <div className="quantity-controls">
             <Button
-              variant="outline-primary"
+              variant="outline-success"
               onClick={decrementQuantity}
               className="quantity-control"
             >
               -
             </Button>
             <input
+              aria-label="quantity"
               disabled
               type="text"
               value={quantity}
@@ -58,7 +64,7 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
               className="quantity-input"
             />
             <Button
-              variant="outline-primary"
+              variant="outline-success"
               onClick={incrementQuantity}
               className="quantity-control"
             >
@@ -67,14 +73,15 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
           </div>
         </Form.Group>
       </div>
-      <div className="subtotal">Subtotal: ${subtotal.toFixed(2)}</div>
-      <div>
-        <i
-          onClick={handleRemoveFromCart}
-          id="cart-icon"
-          className="bi bi-trash"
-        ></i>
+      <div className="cart-item__subtotal">
+        Subtotal: ${subtotal.toFixed(2)}
       </div>
+
+      <i
+        onClick={handleRemoveFromCart}
+        id="cart-icon"
+        className="bi bi-trash"
+      ></i>
     </div>
   );
 };

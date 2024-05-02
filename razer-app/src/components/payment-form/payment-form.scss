@@ -1,4 +1,6 @@
 .credit-card-form {
+  margin-left: 40px;
+  max-width: 480px;
   .error {
     border-color: red; // Cambia el color del borde a rojo cuando hay un error en el campo
   }
@@ -7,4 +9,15 @@
     color: red; // Cambia el color del mensaje de error a rojo
     font-size: 0.8rem; // Ajusta el tamaño del texto del mensaje de error
   }
+}
+
+.card-logo {
+  width: 60px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.number-logo-container {
+  display: flex;
+  justify-content: space-between;
 }

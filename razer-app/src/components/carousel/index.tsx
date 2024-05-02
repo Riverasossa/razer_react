@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getCarouselProducts } from "../../services/product-service";
 import { Carousel, CardGroup } from "react-bootstrap";
 import ProductCard from "../card/";
 import { Product } from "../../models/product";
 import "./carousel.scss";
+import { useNavigate } from "react-router-dom";
 
 const ProductsCarousel = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCarouselProducts = async () => {
@@ -42,6 +44,10 @@ const ProductsCarousel = () => {
   const slidesToShow = determineSlidesToShow();
   const totalSlides = Math.ceil(products.length / slidesToShow);
 
+  const handleViewAllProducts = () => {
+    navigate("/products-list");
+  };
+
   return (
     <div className="carousel-wrapper">
       <h2 className="carousel-title">BEST SELLERS</h2>
@@ -49,9 +55,9 @@ const ProductsCarousel = () => {
         <p className="disclaimer__description">
           Join the hype train with the hottest products in our arsenal
         </p>
-        <a href="./products-list" className="disclaimer__link">
+        <button onClick={handleViewAllProducts} className="disclaimer__link">
           View All Products
-        </a>
+        </button>
       </section>
       <Carousel interval={null}>
         {[...Array(totalSlides)].map((_, index) => (

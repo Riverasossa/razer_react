@@ -1,5 +1,3 @@
-// services/LocationService.ts
-
 import axios from "axios";
 
 interface Province {

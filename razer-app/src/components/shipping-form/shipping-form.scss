@@ -1,10 +1,16 @@
 .shipping-form {
-  .error {
-    border-color: red; // Cambia el color del borde a rojo cuando se aplica la clase error
-  }
+  width: 350px;
+}
 
-  .error-message {
-    color: red; // Cambia el color del mensaje de error a rojo
-    font-size: 0.8rem; // Ajusta el tamaño del texto del mensaje de error
-  }
+.shipping-form__input {
+  width: 100%;
+}
+
+.shipping-form__input.error {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8rem;
 }

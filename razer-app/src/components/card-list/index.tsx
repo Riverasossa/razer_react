@@ -1,14 +1,18 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Card, Button, Modal } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { Product } from "../../models/product";
 import { useCart } from "../../services/cart-service";
+import { useAuth } from "../../services/auth-service";
+
 import "./card-list.scss";
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
+  const { auth } = useAuth();
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const handleAddToCart = () => {
     if (!product) {
@@ -16,9 +20,25 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       return;
     }
 
-    addToCart(product);
-    alert("Product added to cart!");
-    navigate("/cart");
+    if (!auth.isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
+    const isInCart = cart[product.id] !== undefined;
+
+    if (isInCart) {
+      setModalMessage("The product is already in the cart.");
+    } else {
+      addToCart(product);
+      setModalMessage("Product added to cart!");
+    }
+
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -28,6 +48,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         variant="top"
         src={product.image}
         className="product-image"
+        alt="product-image"
       />
       <Card.Body id="list-card-body" className="d-flex flex-column">
         <div>
@@ -44,6 +65,23 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           </Button>
         </div>
       </Card.Body>
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header>
+          <Modal.Title>{modalMessage}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {modalMessage === "The product is already in the cart." ? (
+            <p>{product.name} is already in your cart.</p>
+          ) : (
+            <p>{product.name} has been added to your cart.</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleCloseModal}>
+            CLOSE
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Card>
   );
 };

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import ShippingForm from "../shipping-form";
-import CreditCardForm from "../payment-form";
-import CartSummary from "../cart-summary"; // Importa el componente CartSummary
+import PaymentForm from "../payment-form";
+import CartSummary from "../cart-summary";
 import "./checkout.scss";
 
 const Checkout = () => {
@@ -20,7 +20,7 @@ const Checkout = () => {
             <ShippingForm onNext={handleNext} />
           </Tab>
           <Tab eventKey="payment" title="Payment" disabled={key !== "payment"}>
-            <CreditCardForm />
+            <PaymentForm />
           </Tab>
         </Tabs>
       </div>

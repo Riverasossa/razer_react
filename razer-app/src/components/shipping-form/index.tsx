@@ -5,7 +5,7 @@ import LocationService, {
   Canton,
   District,
 } from "../../services/location-service";
-import "./shipping-form.scss"; // Importa el archivo Sass para aplicar estilos
+import "./shipping-form.scss";
 
 const ShippingForm = ({ onNext }) => {
   const [provinces, setProvinces] = useState<Province>({});
@@ -73,7 +73,7 @@ const ShippingForm = ({ onNext }) => {
 
   const handleZipCodeChange = (e) => {
     const zip = e.target.value.replace(/\D/g, ""); // Elimina cualquier carácter no numérico
-    setZipCode(zip.substring(0, 5)); // Limita la entrada a 5 dígitos
+    setZipCode(zip.substring(0, 5));
   };
 
   const handleSubmit = () => {
@@ -101,9 +101,11 @@ const ShippingForm = ({ onNext }) => {
           placeholder="Enter address"
           value={address1}
           onChange={handleAddress1Change}
-          className={errors.address1 ? "form-address1 error" : "form-address1"}
+          className={`shipping-form__input ${errors.address1 ? "error" : ""}`}
         />
-        <Form.Text className="error-message">{errors.address1}</Form.Text>
+        {errors.address1 && (
+          <Form.Text className="error-message">{errors.address1}</Form.Text>
+        )}
       </Form.Group>
       <Form.Group controlId="formAddress2">
         <Form.Label>Address 2</Form.Label>
@@ -112,6 +114,7 @@ const ShippingForm = ({ onNext }) => {
           placeholder="Enter address"
           value={address2}
           onChange={handleAddress2Change}
+          className="shipping-form__input"
         />
       </Form.Group>
       <Form.Group controlId="formProvince">
@@ -120,7 +123,7 @@ const ShippingForm = ({ onNext }) => {
           as="select"
           value={selectedProvince}
           onChange={handleProvinceChange}
-          className={errors.province ? "form-province error" : "form-province"}
+          className={`shipping-form__input ${errors.province ? "error" : ""}`}
         >
           <option value="">Choose...</option>
           {Object.entries(provinces).map(([code, name]) => (
@@ -129,7 +132,9 @@ const ShippingForm = ({ onNext }) => {
             </option>
           ))}
         </Form.Control>
-        <Form.Text className="error-message">{errors.province}</Form.Text>
+        {errors.province && (
+          <Form.Text className="error-message">{errors.province}</Form.Text>
+        )}
       </Form.Group>
       {selectedProvince && (
         <Form.Group controlId="formCanton">
@@ -138,7 +143,7 @@ const ShippingForm = ({ onNext }) => {
             as="select"
             value={selectedCanton}
             onChange={handleCantonChange}
-            className={errors.canton ? "form-canton error" : "form-canton"}
+            className={`shipping-form__input ${errors.canton ? "error" : ""}`}
           >
             <option value="">Choose...</option>
             {Object.entries(cantons).map(([code, name]) => (
@@ -147,7 +152,9 @@ const ShippingForm = ({ onNext }) => {
               </option>
             ))}
           </Form.Control>
-          <Form.Text className="error-message">{errors.canton}</Form.Text>
+          {errors.canton && (
+            <Form.Text className="error-message">{errors.canton}</Form.Text>
+          )}
         </Form.Group>
       )}
       {selectedCanton && (
@@ -157,9 +164,7 @@ const ShippingForm = ({ onNext }) => {
             as="select"
             value={selectedDistrict}
             onChange={handleDistrictChange}
-            className={
-              errors.district ? "form-district error" : "form-district"
-            }
+            className={`shipping-form__input ${errors.district ? "error" : ""}`}
           >
             <option value="">Choose...</option>
             {Object.entries(districts).map(([code, name]) => (
@@ -168,7 +173,9 @@ const ShippingForm = ({ onNext }) => {
               </option>
             ))}
           </Form.Control>
-          <Form.Text className="error-message">{errors.district}</Form.Text>
+          {errors.district && (
+            <Form.Text className="error-message">{errors.district}</Form.Text>
+          )}
         </Form.Group>
       )}
       <Form.Group controlId="formZipCode">
@@ -178,10 +185,12 @@ const ShippingForm = ({ onNext }) => {
           placeholder="Enter zip code"
           value={zipCode}
           onChange={handleZipCodeChange}
-          className={errors.zipCode ? "form-zip-code error" : "form-zip-code"}
+          className={`shipping-form__input ${errors.zipCode ? "error" : ""}`}
           maxLength={5}
         />
-        <Form.Text className="error-message">{errors.zipCode}</Form.Text>
+        {errors.zipCode && (
+          <Form.Text className="error-message">{errors.zipCode}</Form.Text>
+        )}
       </Form.Group>
       <Button variant="primary" type="button" onClick={handleSubmit}>
         SUBMIT

@@ -36,7 +36,7 @@ const Login = () => {
   return (
     <div className="login-background">
       <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title className="modal-bg">Login Successful</Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-bg">

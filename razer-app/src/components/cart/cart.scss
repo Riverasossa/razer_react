@@ -1,3 +1,56 @@
 .cart-container {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: $card-content-background-color;
   margin-top: 100px;
+  margin-bottom: 25px;
+
+  &__title {
+    margin-bottom: 20px;
+    color: $color-green;
+  }
+
+  &__items {
+    margin-bottom: 20px;
+  }
+
+  &__total-price {
+    margin-bottom: 20px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.cart-empty {
+  display: flex;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: $card-content-background-color;
+  border-color: $color-green;
+  color: $color-green;
+  justify-content: center;
+}
+
+h5 {
+  color: $card-content-title-color;
+}
+
+.btn-danger {
+  background-color: #b30000;
+  font-weight: bold;
+  color: $card-content-background-color;
+  &:hover {
+    background-color: #b30000;
+  }
+}
+
+h4 {
+  color: $card-content-title-color;
 }

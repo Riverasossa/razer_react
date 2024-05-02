@@ -16,27 +16,31 @@ const Cart: React.FC = () => {
     .toFixed(2);
 
   if (Object.keys(cart).length === 0) {
-    return <Alert variant="info">Your cart is empty.</Alert>;
+    return (
+      <Alert variant="info" className="cart-empty">
+        Your cart is empty.
+      </Alert>
+    );
   }
 
   return (
     <div className="cart-container">
-      <h2>Shopping Cart</h2>
-      <div className="cart-items">
+      <h2 className="cart-container__title">Shopping Cart</h2>
+      <div className="cart-container__items">
         {Object.values(cart).map((item) => (
           <CartItem key={item.product.id} product={item.product} />
         ))}
       </div>
-      <div className="total-price">
+      <div className="cart-container__total-price">
         <h4>Total Price: ${totalPrice}</h4>
       </div>
-      <div className="actions">
+      <div className="cart-container__actions">
         <Button variant="danger" onClick={clearCart}>
-          Clear Cart
+          CLEAR CART
         </Button>
         <Link to="/checkout">
           {" "}
-          <Button variant="primary">Checkout</Button>
+          <Button variant="primary">CHECKOUT</Button>
         </Link>
       </div>
     </div>

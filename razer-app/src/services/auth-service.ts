@@ -13,7 +13,6 @@ export const useAuth = () => {
         (u) => u.username === user.username && u.password === user.password
       );
 
-      // Validar el formato del correo electrónico
       const isValidEmail = validateEmail(user.username);
       if (!isValidEmail) {
         throw new Error("*Please enter a valid email address");

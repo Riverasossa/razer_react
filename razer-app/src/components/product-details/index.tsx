@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { ProductService } from "../../services/product-service";
 import { Product } from "../../models/product";
 import { useCart } from "../../services/cart-service";
+import { useAuth } from "../../services/auth-service"; // Importa el servicio de autenticación
 import "./details.scss";
 
 const ProductDetailsPage = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const { id } = useParams<{ id: string }>();
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
+  const { auth } = useAuth();
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -41,8 +45,26 @@ const ProductDetailsPage = () => {
       return;
     }
 
-    addToCart(product);
-    alert("Product added to cart!");
+    if (!auth.isAuthenticated) {
+      // Verifica si el usuario está autenticado
+      navigate("/login"); // Redirige al usuario al inicio de sesión si no está autenticado
+      return;
+    }
+
+    const isInCart = cart[product.id] !== undefined;
+
+    if (isInCart) {
+      setModalMessage("The product is already in the cart.");
+    } else {
+      addToCart(product);
+      setModalMessage("Product added to cart!");
+    }
+
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
     navigate("/cart");
   };
 
@@ -74,6 +96,25 @@ const ProductDetailsPage = () => {
           ADD TO CART
         </Button>
       </div>
+
+      {/* Modal */}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalMessage}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {modalMessage === "The product is already in the cart." ? (
+            <p>{product.name} is already in your cart.</p>
+          ) : (
+            <p>{product.name} has been added to your cart.</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

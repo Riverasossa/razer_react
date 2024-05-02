@@ -1,22 +1,28 @@
-import React from "react";
 import { useCart } from "../../services/cart-service";
 import "./cart-summary.scss";
 
 const CartSummary = () => {
   const { cart } = useCart();
 
-  // Función para calcular el subtotal de un producto
-  const calculateSubtotal = (quantity, price) => {
+  const calculateSubtotal = (quantity: number, price: string) => {
     return quantity * parseFloat(price.replace(/[^0-9.]/g, ""));
   };
 
-  // Calcular el total general del carrito
-  const total = Object.values(cart)
-    .reduce(
+  const calculateTotal = () => {
+    const subtotal = Object.values(cart).reduce(
       (acc, item) => acc + calculateSubtotal(item.quantity, item.product.price),
       0
-    )
-    .toFixed(2);
+    );
+    const iva = subtotal * 0.13;
+    const total = subtotal + iva;
+    return {
+      subtotal: subtotal.toFixed(2),
+      iva: iva.toFixed(2),
+      total: total.toFixed(2),
+    };
+  };
+
+  const { subtotal, iva, total } = calculateTotal();
 
   return (
     <div className="cart-summary">
@@ -28,7 +34,7 @@ const CartSummary = () => {
               <img
                 src={item.product.image}
                 alt={item.product.name}
-                className="product-image"
+                className="cart-image"
               />
               <div>
                 <h5>{item.product.name}</h5>
@@ -41,8 +47,10 @@ const CartSummary = () => {
           </div>
         ))}
       </div>
-      <div className="total">
-        <h5>Total: ${total}</h5>
+      <div className="totals">
+        <div className="subtotal">Subtotal: ${subtotal}</div>
+        <div className="iva">IVA (13%): ${iva}</div>
+        <div className="total">Total: ${total}</div>
       </div>
     </div>
   );

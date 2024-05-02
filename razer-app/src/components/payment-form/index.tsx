@@ -1,16 +1,27 @@
 import React, { useState } from "react";
-import { Form, Button, Col } from "react-bootstrap";
-import "./payment-form.scss"; // Importa el archivo Sass para aplicar estilos
+import { Form, Button, Col, Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../services/cart-service";
+import "./payment-form.scss";
 
-const CreditCardForm = () => {
+interface Errors {
+  cardNumber?: string;
+  cardHolderName?: string;
+  expirationDate?: string;
+  cvv?: string;
+}
+
+const PaymentForm = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
   const [cvv, setCvv] = useState("");
   const [cardType, setCardType] = useState("");
-  const [errors, setErrors] = useState({});
-
-  const handleCardNumberChange = (e) => {
+  const [errors, setErrors] = useState<Errors>({});
+  const [showModal, setShowModal] = useState(false);
+  const { clearCart } = useCart();
+  const navigate = useNavigate();
+  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
 
     // Permitir solo números en el campo de número de tarjeta
@@ -25,7 +36,7 @@ const CreditCardForm = () => {
       value = value.slice(0, 15); // Amex tiene un máximo de 15 números
     }
 
-    // Eliminar espacios en blanco para calcular la longitud real del número de tarjeta
+    // Eliminar espacios en blanco para calcular la longitud del número de tarjeta
     const cardNumberWithoutSpaces = value.replace(/\s/g, "");
     const cardRegex = {
       visa: /^4\d{3}(| |-)(?:\d{4}\1){2}\d{4}$/,
@@ -60,18 +71,59 @@ const CreditCardForm = () => {
     setCardNumber(formattedNumber);
   };
 
-  const handleCardHolderNameChange = (e) => {
+  const handleCardHolderNameChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = e.target.value;
     // Permitir solo letras y espacios en blanco en el nombre del titular de la tarjeta
     setCardHolderName(value.replace(/[^A-Za-z\s]/g, ""));
   };
 
-  const handleExpirationDateChange = (e) => {
+  const handleExpirationDateChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = e.target.value;
+
+    // Expresión regular para validar el formato MM/YY
+    const dateFormat = /^(0[1-9]|1[0-2])\/\d{2}$/;
+
+    // Validar el formato
+    if (!dateFormat.test(value)) {
+      setExpirationDate(value);
+      setErrors({
+        expirationDate: "Please enter a valid expiration date (MM/YY).",
+      });
+      return;
+    }
+
+    // Obtener el mes y el año de la fecha ingresada
+    const [expMonth, expYear] = value.split("/");
+
+    // Validar el mes
+    const month = parseInt(expMonth);
+    if (month < 1 || month > 12) {
+      setExpirationDate(value);
+      setErrors({ expirationDate: "Please enter a valid month (1-12)." });
+      return;
+    }
+
+    // Obtener el año actual para validar el año de vencimiento
+    const currentYear = new Date().getFullYear().toString().substr(-2);
+    const year = parseInt(expYear);
+
+    // Validar el año (no permitir "00")
+    if (year < parseInt(currentYear) || year >= parseInt(currentYear) + 100) {
+      setExpirationDate(value);
+      setErrors({ expirationDate: "Please enter a valid year." });
+      return;
+    }
+
+    // Si pasa todas las validaciones, establecer la fecha de vencimiento y eliminar cualquier error existente
     setExpirationDate(value);
+    setErrors({});
   };
 
-  const handleCvvChange = (e) => {
+  const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Limitar la longitud del CVV según el tipo de tarjeta
     const cvvLengths = {
@@ -79,11 +131,11 @@ const CreditCardForm = () => {
       mastercard: 3,
       amex: 4,
     };
-    const length = cvvLengths[cardType] || 3;
+    const length = (cvvLengths as Record<string, number>)[cardType] || 3;
     setCvv(value.slice(0, length).replace(/\D/g, ""));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Validar la información antes de enviarla
     const today = new Date();
@@ -92,7 +144,7 @@ const CreditCardForm = () => {
       parseInt("20" + expYear),
       parseInt(expMonth) - 1
     );
-    const newErrors = {};
+    const newErrors: Errors = {};
     if (!cardNumber) {
       newErrors.cardNumber = "Please enter a card number.";
     }
@@ -116,75 +168,100 @@ const CreditCardForm = () => {
 
     if (Object.keys(newErrors).length === 0) {
       // Lógica para enviar la información de la tarjeta de crédito
-      alert("Form submitted successfully");
+      setShowModal(true);
+      clearCart();
       setErrors({}); // Reinicia el estado de errores a un objeto vacío
     } else {
       setErrors(newErrors);
     }
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false); // Ocultar el modal
+    navigate("/"); // Redirigir al home
+  };
+
   return (
-    <div className="credit-card-form">
-      <Form.Group controlId="formCardNumber">
-        <Form.Label>Card Number *</Form.Label>
-        {cardType && (
-          <img
-            src={`/images/cards/${cardType}.png`}
-            alt={`${cardType} card`}
-            style={{ maxWidth: "100px" }}
-          />
-        )}
-        <Form.Control
-          type="text"
-          placeholder="Enter card number"
-          value={cardNumber}
-          onChange={handleCardNumberChange}
-          className={errors.cardNumber ? "error" : ""}
-        />
-        <Form.Text className="error-message">{errors.cardNumber}</Form.Text>
-      </Form.Group>
-      <Form.Group controlId="formCardHolderName">
-        <Form.Label>Card Holder Name *</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter card holder name"
-          value={cardHolderName}
-          onChange={handleCardHolderNameChange}
-          className={errors.cardHolderName ? "error" : ""}
-        />
-        <Form.Text className="error-message">{errors.cardHolderName}</Form.Text>
-      </Form.Group>
-      <Form>
-        <Form.Group as={Col} controlId="formExpirationDate">
-          <Form.Label>Expiration Date *</Form.Label>
+    <Form onSubmit={handleSubmit}>
+      <div className="credit-card-form">
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header>
+            <Modal.Title className="modal-bg">Payment Successful</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="modal-bg">
+            <p>Your purchase has been successfully completed.</p>
+          </Modal.Body>
+          <Modal.Footer className="modal-bg">
+            <Button variant="primary" onClick={handleCloseModal}>
+              GO TO HOME PAGE
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Form.Group controlId="formCardNumber">
+          <div className="number-logo-container">
+            <Form.Label>Card Number *</Form.Label>
+            {cardType && (
+              <img
+                className="card-logo"
+                src={`/images/cards/${cardType}.png`}
+                alt={`${cardType} card`}
+              />
+            )}
+          </div>
           <Form.Control
             type="text"
-            placeholder="MM/YY"
-            value={expirationDate}
-            onChange={handleExpirationDateChange}
-            className={errors.expirationDate ? "error" : ""}
+            placeholder="Enter card number"
+            value={cardNumber}
+            onChange={handleCardNumberChange}
+            className={errors.cardNumber ? "error" : ""}
+          />
+          <Form.Text className="error-message">{errors.cardNumber}</Form.Text>
+        </Form.Group>
+        <Form.Group controlId="formCardHolderName">
+          <Form.Label>Card Holder Name *</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter card holder name"
+            value={cardHolderName}
+            onChange={handleCardHolderNameChange}
+            className={errors.cardHolderName ? "error" : ""}
           />
           <Form.Text className="error-message">
-            {errors.expirationDate}
+            {errors.cardHolderName}
           </Form.Text>
         </Form.Group>
-        <Form.Group as={Col} controlId="formCvv">
-          <Form.Label>CVV *</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="CVV"
-            value={cvv}
-            onChange={handleCvvChange}
-            className={errors.cvv ? "error" : ""}
-          />
-          <Form.Text className="error-message">{errors.cvv}</Form.Text>
-        </Form.Group>
-      </Form>
-      <Button variant="primary" type="button" onClick={handleSubmit}>
-        SUBMIT
-      </Button>
-    </div>
+        <Form>
+          <Form.Group as={Col} controlId="formExpirationDate">
+            <Form.Label>Expiration Date *</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="MM/YY"
+              value={expirationDate}
+              onChange={handleExpirationDateChange}
+              className={errors.expirationDate ? "error" : ""}
+            />
+            <Form.Text className="error-message">
+              {errors.expirationDate}
+            </Form.Text>
+          </Form.Group>
+          <Form.Group as={Col} controlId="formCvv">
+            <Form.Label>CVV *</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="CVV"
+              value={cvv}
+              onChange={handleCvvChange}
+              className={errors.cvv ? "error" : ""}
+            />
+            <Form.Text className="error-message">{errors.cvv}</Form.Text>
+          </Form.Group>
+        </Form>
+        <Button variant="primary" type="submit">
+          SUBMIT
+        </Button>
+      </div>
+    </Form>
   );
 };
 
-export default CreditCardForm;
+export default PaymentForm;

@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import { cartState } from "../states/cart-state";
-import { Product } from "../models/product"; // Importa el modelo de producto
+import { Product } from "../models/product";
 
 export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
@@ -20,20 +20,21 @@ export const useCart = () => {
   const updateCartItem = (productId: number, quantity: number) => {
     setCart((prevCart) =>
       Object.keys(prevCart).reduce((updatedCart, key) => {
-        if (parseInt(key) === productId) {
-          updatedCart[key] = { ...prevCart[key], quantity };
+        const numericKey = parseInt(key);
+        if (!isNaN(numericKey) && numericKey === productId) {
+          updatedCart[numericKey] = { ...prevCart[numericKey], quantity };
         } else {
-          updatedCart[key] = prevCart[key];
+          updatedCart[numericKey] = prevCart[numericKey];
         }
         return updatedCart;
-      }, {})
+      }, {} as Record<number, { product: Product; quantity: number }>)
     );
   };
 
   const removeFromCart = (productId: number) => {
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
-      delete updatedCart[productId]; // Elimina el producto del carrito
+      delete updatedCart[productId]; 
       return updatedCart;
     });
   };
@@ -41,7 +42,6 @@ export const useCart = () => {
   const clearCart = () => {
     setCart({});
   };
-
 
   return { cart, addToCart, updateCartItem, removeFromCart, clearCart };
 };

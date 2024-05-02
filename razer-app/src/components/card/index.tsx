@@ -1,13 +1,13 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Product } from "../../models/product"; // Importa el modelo Product
+import { Product } from "../../models/product";
 import "./card.scss";
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <Card className="m-2">
-      <Card.Img variant="top" src={`/${product.image}`} />
+      <Card.Img alt="product-image" variant="top" src={`/${product.image}`} />
       <Card.Body>
         <Card.Title id="product-name">{product.name}</Card.Title>
         <Card.Text>{product.summary}</Card.Text>

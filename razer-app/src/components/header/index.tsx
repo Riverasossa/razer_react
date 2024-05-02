@@ -1,5 +1,4 @@
-import React from "react";
-import { Navbar, Nav, Container, Button, Dropdown } from "react-bootstrap";
+import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authState } from "../../states/auth-state";
@@ -24,7 +23,7 @@ const Header = () => {
         </Link>
         {isAuthenticated && (
           <div className="shopping-cart-container">
-            <Link to="/cart" className="btn p-0">
+            <Link to="/cart" className="btn p-0" aria-label="cart">
               <i id="cart-icon" className="bi bi-cart3"></i>
             </Link>
           </div>

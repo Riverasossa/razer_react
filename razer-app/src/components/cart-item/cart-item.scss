@@ -1,8 +1,84 @@
+.cart-item {
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: center;
+  text-align: -webkit-center;
+  border-bottom: outset;
+
+  @include for-tablet {
+    grid-template-columns: auto auto auto auto auto;
+    gap: 2rem;
+
+    align-items: center;
+  }
+  &__image {
+    width: 200px; /* Ajusta el margen según tu preferencia */
+  }
+
+  &__info {
+    width: 200px;
+    justify-self: center;
+    & h5 {
+      margin-bottom: 5px; /* Ajusta el margen según tu preferencia */
+    }
+
+    @include for-tablet {
+      width: 100px;
+    }
+  }
+
+  &__quantity-controls {
+    text-wrap: nowrap;
+
+    vertical-align: bottom;
+    & .quantity-control {
+      vertical-align: baseline;
+      margin-right: 2px; /* Ajusta el margen según tu preferencia */
+    }
+  }
+
+  &__subtotal {
+    margin-top: 10px; /* Ajusta el margen según tu preferencia */
+    width: 80px;
+    text-wrap: wrap;
+    color: $card-content-description-color;
+    justify-self: center;
+  }
+}
+
+#cart-icon {
+  color: red;
+  cursor: pointer;
+  margin: 10px;
+}
+
 input:disabled {
   background-color: rgb(0, 0, 0);
   color: $color-green;
   margin-bottom: 0;
-  width: 50px;
+  width: 45px;
+  height: 45px;
   text-align: center;
   border-radius: 10px;
+  vertical-align: baseline;
+}
+
+.btn-outline-success {
+  background-color: black;
+  width: 45px;
+  height: 45px;
+  border-color: $color-green;
+  color: $color-green;
+  --bs-btn-active-bg: $color-green;
+  --bs-btn-hover-bg: $color-green;
+  &:focus,
+  :hover {
+    background-color: $color-green;
+    border-color: $color-green;
+    color: azure;
+  }
+  &:active {
+    background-color: black;
+    border-color: $color-green;
+  }
 }

@@ -42,8 +42,8 @@ p {
   &:active,
   &:focus {
     border-color: $color-green;
-    background-color: $color-green;
-    color: $card-content-title-color;
+    background-color: rgb(33, 75, 38);
+    color: white;
   }
   &--outline-success {
     border-color: $color-green;

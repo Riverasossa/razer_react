@@ -1,5 +1,3 @@
-// ProductListPage.tsx
-
 import React, { useState, useEffect } from "react";
 import { ProductService } from "../../services/product-service";
 import { Product } from "../../models/product";
@@ -15,6 +13,7 @@ const ProductListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<number[]>([]);
+  const [noProductsFound, setNoProductsFound] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -47,6 +46,7 @@ const ProductListPage: React.FC = () => {
         return matchesSearch && matchesCategory && matchesPriceRange;
       });
       setFilteredProducts(filtered);
+      setNoProductsFound(filtered.length === 0);
     };
 
     filterProducts();
@@ -124,7 +124,7 @@ const ProductListPage: React.FC = () => {
           />
         </div>
         <div className="product-list-container__card-container">
-          {displayProducts}
+          {noProductsFound ? <p>No products found.</p> : displayProducts}
         </div>
       </div>
       <ReactPaginate
