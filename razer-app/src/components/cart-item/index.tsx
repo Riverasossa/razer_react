@@ -7,7 +7,10 @@ import { Product } from "../../models/product";
 const CartItem: React.FC<{ product: Product }> = ({ product }) => {
   const { updateCartItem, removeFromCart } = useCart();
   const { cart } = useCart();
-  const quantity = cart[product.id]?.quantity || 0;
+  const item = cart[product.id];
+  const quantity = item?.quantity || 0;
+  const subtotal =
+    (item?.quantity || 0) * parseFloat(product.price.replace(",", "")); // Calcula el subtotal
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
@@ -26,8 +29,8 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
     }
   };
 
-  const removeProduct = () => {
-    removeFromCart(product.id); // Agrega la función para eliminar el producto del carrito
+  const handleRemoveFromCart = () => {
+    removeFromCart(product.id);
   };
 
   return (
@@ -61,14 +64,16 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
             >
               +
             </Button>
-
-            <i
-              onClick={removeProduct}
-              id="cart-icon"
-              className="bi bi-trash"
-            ></i>
           </div>
         </Form.Group>
+      </div>
+      <div className="subtotal">Subtotal: ${subtotal.toFixed(2)}</div>
+      <div>
+        <i
+          onClick={handleRemoveFromCart}
+          id="cart-icon"
+          className="bi bi-trash"
+        ></i>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { Button, Alert } from "react-bootstrap";
 import { useCart } from "../../services/cart-service";
 import CartItem from "../cart-item";
 import "./cart.scss";
+import { Link } from "react-router-dom";
 
 const Cart: React.FC = () => {
   const { cart, clearCart } = useCart();
@@ -33,6 +34,11 @@ const Cart: React.FC = () => {
         <Button variant="danger" onClick={clearCart}>
           Clear Cart
         </Button>
+        <Link to="/checkout">
+          {" "}
+          // Añade un Link al botón de checkout
+          <Button variant="primary">Checkout</Button>
+        </Link>
       </div>
     </div>
   );

@@ -18,19 +18,22 @@ export const useCart = () => {
   };
 
   const updateCartItem = (productId: number, quantity: number) => {
-    setCart((prevCart) => {
-      const updatedCart = { ...prevCart };
-      if (updatedCart[productId]) {
-        updatedCart[productId] = { ...updatedCart[productId], quantity };
-      }
-      return updatedCart;
-    });
+    setCart((prevCart) =>
+      Object.keys(prevCart).reduce((updatedCart, key) => {
+        if (parseInt(key) === productId) {
+          updatedCart[key] = { ...prevCart[key], quantity };
+        } else {
+          updatedCart[key] = prevCart[key];
+        }
+        return updatedCart;
+      }, {})
+    );
   };
 
   const removeFromCart = (productId: number) => {
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
-      delete updatedCart[productId];
+      delete updatedCart[productId]; // Elimina el producto del carrito
       return updatedCart;
     });
   };
