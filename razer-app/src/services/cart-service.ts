@@ -42,5 +42,6 @@ export const useCart = () => {
     setCart({});
   };
 
+
   return { cart, addToCart, updateCartItem, removeFromCart, clearCart };
 };

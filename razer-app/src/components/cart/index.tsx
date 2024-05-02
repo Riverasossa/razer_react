@@ -36,7 +36,6 @@ const Cart: React.FC = () => {
         </Button>
         <Link to="/checkout">
           {" "}
-          // Añade un Link al botón de checkout
           <Button variant="primary">Checkout</Button>
         </Link>
       </div>

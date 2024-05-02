@@ -3,14 +3,17 @@ import { Navbar, Nav, Container, Button, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authState } from "../../states/auth-state";
+import { useCart } from "../../services/cart-service";
 import "./header.scss";
 
 const Header = () => {
   const { isAuthenticated, user } = useRecoilValue(authState);
   const [, setAuth] = useRecoilState(authState);
+  const { clearCart } = useCart();
 
   const logout = () => {
     setAuth({ isAuthenticated: false, user: null });
+    clearCart();
   };
 
   return (

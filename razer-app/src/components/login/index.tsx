@@ -22,7 +22,6 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       await login(formData);
-      // Si el login tiene éxito, mostramos el modal
       setShowModal(true);
     } catch (error) {
       setError(error.message || "Error logging in. Please try again.");
