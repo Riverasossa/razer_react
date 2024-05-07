@@ -7,14 +7,14 @@
       font-size: 0;
 
       img {
-        width: 40px; // Reducir el tamaño de las imágenes
+        width: 40px;
       }
     }
   }
 
   &__info-section {
-    margin-top: 2rem; // Añadir espacio arriba del info-section
-    margin-bottom: 2rem; // Añadir espacio abajo del info-section
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     display: grid;
 
     &__address {

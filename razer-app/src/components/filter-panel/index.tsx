@@ -1,9 +1,17 @@
-// En FilterPanel.jsx
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { Form, Button } from "react-bootstrap";
 import "./filter-panel.scss";
 
-const FilterPanel = ({
+interface FilterPanelProps {
+  handleSearch: (term: string) => void;
+  handleCategoryFilter: (category: string) => void;
+  handlePriceFilter: (priceRangeIndex: number) => void;
+  handleClearFilters: () => void;
+  setPageNumber: (pageNumber: number) => void;
+  categories: string[];
+}
+
+const FilterPanel: React.FC<FilterPanelProps> = ({
   handleSearch,
   handleCategoryFilter,
   handlePriceFilter,
@@ -29,7 +37,7 @@ const FilterPanel = ({
   return (
     <div className="filter-panel">
       <h3 className="filter-panel__title">FILTER BY</h3>
-      <Form onSubmit={(e) => e.preventDefault()}>
+      <Form onSubmit={(e: FormEvent) => e.preventDefault()}>
         <Form.Group controlId="formSearch">
           <Form.Label className="filter-panel__label">SEARCH:</Form.Label>
           <Form.Control
@@ -77,7 +85,7 @@ const FilterPanel = ({
                     key={index}
                     type="checkbox"
                     label={priceRange}
-                    value={index} // Usa el índice del rango de precios como valor
+                    value={index}
                     checked={selectedPriceRangesInternal.includes(index)}
                     onChange={(e) => {
                       handlePriceFilter(parseInt(e.target.value));

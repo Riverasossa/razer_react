@@ -24,7 +24,11 @@ const Login = () => {
       await login(formData);
       setShowModal(true);
     } catch (error) {
-      setError(error.message || "Error logging in. Please try again.");
+      if (error instanceof Error) {
+        setError(error.message || "Error logging in. Please try again.");
+      } else {
+        setError("Error logging in. Please try again.");
+      }
     }
   };
 

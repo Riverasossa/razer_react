@@ -12,14 +12,14 @@
     align-items: center;
   }
   &__image {
-    width: 200px; /* Ajusta el margen según tu preferencia */
+    width: 200px;
   }
 
   &__info {
     width: 200px;
     justify-self: center;
     & h5 {
-      margin-bottom: 5px; /* Ajusta el margen según tu preferencia */
+      margin-bottom: 5px;
     }
 
     @include for-tablet {
@@ -33,12 +33,12 @@
     vertical-align: bottom;
     & .quantity-control {
       vertical-align: baseline;
-      margin-right: 2px; /* Ajusta el margen según tu preferencia */
+      margin-right: 2px;
     }
   }
 
   &__subtotal {
-    margin-top: 10px; /* Ajusta el margen según tu preferencia */
+    margin-top: 10px;
     width: 80px;
     text-wrap: wrap;
     color: $card-content-description-color;

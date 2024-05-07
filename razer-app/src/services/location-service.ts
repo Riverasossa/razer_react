@@ -1,14 +1,14 @@
 import axios from "axios";
 
-interface Province {
+export interface Province {
   [key: string]: string;
 }
 
-interface Canton {
+export interface Canton {
   [key: string]: string;
 }
 
-interface District {
+export interface District {
   [key: string]: string;
 }
 

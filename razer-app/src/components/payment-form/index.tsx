@@ -111,14 +111,13 @@ const PaymentForm = () => {
     const currentYear = new Date().getFullYear().toString().substr(-2);
     const year = parseInt(expYear);
 
-    // Validar el año (no permitir "00")
+    // Validar el año
     if (year < parseInt(currentYear) || year >= parseInt(currentYear) + 100) {
       setExpirationDate(value);
       setErrors({ expirationDate: "Please enter a valid year." });
       return;
     }
 
-    // Si pasa todas las validaciones, establecer la fecha de vencimiento y eliminar cualquier error existente
     setExpirationDate(value);
     setErrors({});
   };
@@ -167,18 +166,17 @@ const PaymentForm = () => {
     }
 
     if (Object.keys(newErrors).length === 0) {
-      // Lógica para enviar la información de la tarjeta de crédito
       setShowModal(true);
       clearCart();
-      setErrors({}); // Reinicia el estado de errores a un objeto vacío
+      setErrors({});
     } else {
       setErrors(newErrors);
     }
   };
 
   const handleCloseModal = () => {
-    setShowModal(false); // Ocultar el modal
-    navigate("/"); // Redirigir al home
+    setShowModal(false);
+    navigate("/");
   };
 
   return (

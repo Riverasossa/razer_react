@@ -10,7 +10,7 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
   const item = cart[product.id];
   const quantity = item?.quantity || 0;
   const subtotal =
-    (item?.quantity || 0) * parseFloat(product.price.replace(",", "")); // Calcula el subtotal
+    (item?.quantity || 0) * parseFloat(product.price.replace(",", ""));
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);

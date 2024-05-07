@@ -4,7 +4,7 @@ import { Button, Modal } from "react-bootstrap";
 import { ProductService } from "../../services/product-service";
 import { Product } from "../../models/product";
 import { useCart } from "../../services/cart-service";
-import { useAuth } from "../../services/auth-service"; // Importa el servicio de autenticación
+import { useAuth } from "../../services/auth-service";
 import "./details.scss";
 
 const ProductDetailsPage = () => {
@@ -46,8 +46,7 @@ const ProductDetailsPage = () => {
     }
 
     if (!auth.isAuthenticated) {
-      // Verifica si el usuario está autenticado
-      navigate("/login"); // Redirige al usuario al inicio de sesión si no está autenticado
+      navigate("/login");
       return;
     }
 

@@ -1,7 +1,5 @@
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { Link } from "react-router-dom";
 import "./footer.scss";
 
 const Footer = () => {

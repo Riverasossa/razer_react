@@ -2,12 +2,12 @@
   margin-left: 40px;
   max-width: 480px;
   .error {
-    border-color: red; // Cambia el color del borde a rojo cuando hay un error en el campo
+    border-color: red;
   }
 
   .error-message {
-    color: red; // Cambia el color del mensaje de error a rojo
-    font-size: 0.8rem; // Ajusta el tamaño del texto del mensaje de error
+    color: red;
+    font-size: 0.8rem;
   }
 }
 

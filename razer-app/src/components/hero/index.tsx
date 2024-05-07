@@ -1,5 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
-import "./hero.scss"; // Importa tu archivo de estilos SCSS
+import "./hero.scss";
 
 const Hero = () => {
   return (

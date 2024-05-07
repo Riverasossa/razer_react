@@ -1,13 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { Form, Button } from "react-bootstrap";
 import LocationService, {
   Province,
   Canton,
   District,
 } from "../../services/location-service";
+
 import "./shipping-form.scss";
 
-const ShippingForm = ({ onNext }) => {
+interface ShippingFormProps {
+  onNext: () => void;
+}
+
+interface Errors {
+  address1?: string;
+  province?: string;
+  canton?: string;
+  district?: string;
+  zipCode?: string;
+}
+
+const ShippingForm: React.FC<ShippingFormProps> = ({ onNext }) => {
   const [provinces, setProvinces] = useState<Province>({});
   const [cantons, setCantons] = useState<Canton>({});
   const [districts, setDistricts] = useState<District>({});
@@ -17,7 +30,7 @@ const ShippingForm = ({ onNext }) => {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [zipCode, setZipCode] = useState("");
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Errors>({});
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -32,15 +45,15 @@ const ShippingForm = ({ onNext }) => {
     fetchProvinces();
   }, []);
 
-  const handleAddress1Change = (e) => {
+  const handleAddress1Change = (e: ChangeEvent<HTMLInputElement>) => {
     setAddress1(e.target.value);
   };
 
-  const handleAddress2Change = (e) => {
+  const handleAddress2Change = (e: ChangeEvent<HTMLInputElement>) => {
     setAddress2(e.target.value);
   };
 
-  const handleProvinceChange = async (e) => {
+  const handleProvinceChange = async (e: ChangeEvent<{ value: string }>) => {
     const provinceCode = e.target.value;
     setSelectedProvince(provinceCode);
     try {
@@ -53,7 +66,7 @@ const ShippingForm = ({ onNext }) => {
     }
   };
 
-  const handleCantonChange = async (e) => {
+  const handleCantonChange = async (e: ChangeEvent<{ value: string }>) => {
     const cantonCode = e.target.value;
     setSelectedCanton(cantonCode);
     try {
@@ -67,22 +80,26 @@ const ShippingForm = ({ onNext }) => {
     }
   };
 
-  const handleDistrictChange = (e) => {
+  const handleDistrictChange = (e: ChangeEvent<{ value: string }>) => {
     setSelectedDistrict(e.target.value);
   };
 
-  const handleZipCodeChange = (e) => {
-    const zip = e.target.value.replace(/\D/g, ""); // Elimina cualquier carácter no numérico
+  const handleZipCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const zip = e.target.value.replace(/\D/g, "");
     setZipCode(zip.substring(0, 5));
   };
 
   const handleSubmit = () => {
-    const newErrors = {};
+    const newErrors: Errors = {};
     if (!address1) newErrors.address1 = "Please enter an address.";
     if (!selectedProvince) newErrors.province = "Please select a province.";
     if (!selectedCanton) newErrors.canton = "Please select a canton.";
     if (!selectedDistrict) newErrors.district = "Please select a district.";
     if (!zipCode) newErrors.zipCode = "Please enter a zip code.";
+
+    if (!zipCode || zipCode.length < 5) {
+      newErrors.zipCode = "Please enter a valid zip code.";
+    }
 
     if (Object.keys(newErrors).length === 0) {
       onNext();
