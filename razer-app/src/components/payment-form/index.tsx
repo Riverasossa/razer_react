@@ -29,11 +29,11 @@ const PaymentForm = () => {
 
     // Limitar la longitud máxima según el tipo de tarjeta
     if (value.startsWith("4")) {
-      value = value.slice(0, 16); // Visa tiene un máximo de 16 números
+      value = value.slice(0, 16);
     } else if (value.startsWith("5")) {
-      value = value.slice(0, 16); // Mastercard tiene un máximo de 16 números
+      value = value.slice(0, 16);
     } else if (value.startsWith("3")) {
-      value = value.slice(0, 15); // Amex tiene un máximo de 15 números
+      value = value.slice(0, 15);
     }
 
     // Eliminar espacios en blanco para calcular la longitud del número de tarjeta
@@ -75,7 +75,7 @@ const PaymentForm = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
-    // Permitir solo letras y espacios en blanco en el nombre del titular de la tarjeta
+    // Permitir solo letras y espacios en blanco en el nombre del titular
     setCardHolderName(value.replace(/[^A-Za-z\s]/g, ""));
   };
 
@@ -84,10 +84,9 @@ const PaymentForm = () => {
   ) => {
     const value = e.target.value;
 
-    // Expresión regular para validar el formato MM/YY
     const dateFormat = /^(0[1-9]|1[0-2])\/\d{2}$/;
 
-    // Validar el formato
+    // Validar el formato de la fecha
     if (!dateFormat.test(value)) {
       setExpirationDate(value);
       setErrors({
@@ -96,7 +95,6 @@ const PaymentForm = () => {
       return;
     }
 
-    // Obtener el mes y el año de la fecha ingresada
     const [expMonth, expYear] = value.split("/");
 
     // Validar el mes
@@ -124,7 +122,6 @@ const PaymentForm = () => {
 
   const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Limitar la longitud del CVV según el tipo de tarjeta
     const cvvLengths = {
       visa: 3,
       mastercard: 3,
@@ -136,7 +133,6 @@ const PaymentForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Validar la información antes de enviarla
     const today = new Date();
     const [expMonth, expYear] = expirationDate.split("/");
     const expiration = new Date(

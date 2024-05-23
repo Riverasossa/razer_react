@@ -52,6 +52,8 @@ p {
 
   @include for-desktop {
     grid-template-columns: auto auto;
+    position: relative;
+    bottom: -60px;
   }
 }
 
@@ -67,6 +69,7 @@ p {
     flex-direction: row;
     height: auto;
     max-width: none;
+    align-items: center;
   }
 }
 
