@@ -23,11 +23,12 @@ export const useCart = () => {
     }
   };
 
-  const addToCart = async (productId: number) => {
+  const addToCart = async (productIds: number | number[]) => {
     try {
+      const ids = Array.isArray(productIds) ? productIds : [productIds];
       await axios.post(
         "http://localhost:8081/shopping-cart/me/add-products",
-        { productIds: [productId] },
+        { productIds: ids },
         { headers: { Authorization: `Bearer ${auth.token}` } }
       );
       fetchCart();

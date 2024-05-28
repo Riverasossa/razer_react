@@ -3,10 +3,12 @@ import { Tabs, Tab } from "react-bootstrap";
 import ShippingForm from "../shipping-form";
 import PaymentForm from "../payment-form";
 import CartSummary from "../cart-summary";
+import { useOrderService } from "../../services/order-service";
 import "./checkout.scss";
 
 const Checkout = () => {
   const [key, setKey] = useState<string>("shipping");
+  const { createOrder } = useOrderService();
 
   const handleNext = () => {
     setKey("payment");

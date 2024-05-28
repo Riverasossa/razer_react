@@ -99,6 +99,15 @@ const Header = () => {
                       Orders
                     </Nav.Link>
                   )}
+                  {user.role.name === "USER" && (
+                    <Nav.Link
+                      as={Link}
+                      to={"/wishlist"}
+                      className="navbar-custom__link"
+                    >
+                      Wishlist
+                    </Nav.Link>
+                  )}
                   <DropdownDivider />
                   <Dropdown.Item as={Link} to={"/"} onClick={logout}>
                     Logout

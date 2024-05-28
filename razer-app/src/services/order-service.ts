@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { authState } from "../states/auth-state";
 import { Order } from "../models/order";
+import { Checkout } from '../models/checkout';
 
 export const useOrderService = () => {
   const { token } = useRecoilValue(authState);
@@ -34,6 +35,21 @@ export const useOrderService = () => {
     }
   };
 
+  
+  const createOrder = async (orderData: Checkout): Promise<Order> => { // Actualiza el tipo de parámetro
+    try {
+      const response = await axios.post("http://localhost:8081/orders/checkout", orderData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error creating order:", error);
+      throw error;
+    }
+  };
+
   const getUserOrders = async (): Promise<Order[]> => {
     try {
       const response = await axios.get("http://localhost:8081/orders/me", {
@@ -62,5 +78,5 @@ export const useOrderService = () => {
     }
   };
 
-  return { getOrders, getOrderById, getUserOrders, updateOrderStatus };
+  return { getOrders, getOrderById, createOrder, getUserOrders, updateOrderStatus };
 };

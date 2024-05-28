@@ -75,7 +75,7 @@ const ProductDetailsPage = () => {
     <div className="details-container">
       <div className="img-details-container">
         <img
-          src={`/${product.image}`}
+          src={`${product.image}`}
           alt="Product Image"
           className="img-fluid"
         />

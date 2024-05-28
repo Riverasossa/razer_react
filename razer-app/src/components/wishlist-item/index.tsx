@@ -1,35 +1,35 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
-import { useCart } from "../../services/cart-service";
-import "./cart-item.scss";
+import { useWishlist } from "../../services/wishlist-service";
+import "./wishlist-item.scss";
 import { Product } from "../../models/product";
 
-interface CartItemProps {
+interface WishlistItemProps {
   product: Product;
   quantity: number;
-  subtotal: number;
 }
 
-const CartItem: React.FC<CartItemProps> = ({ product, quantity, subtotal }) => {
-  const { addToCart, decreaseProductQuantity, removeFromCart } = useCart();
+const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const value = parseInt(e.target.value);
+  if (!isNaN(value) && value >= 0) {
+    //
+  }
+};
 
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value >= 0) {
-      //
-    }
-  };
+const WishlistItem: React.FC<WishlistItemProps> = ({ product, quantity }) => {
+  const { addToWishlist, decreaseProductQuantity, removeFromWishlist } =
+    useWishlist();
 
   const incrementQuantity = () => {
-    addToCart(product.productId);
+    addToWishlist(product.productId);
   };
 
   const decrementQuantity = () => {
     decreaseProductQuantity(product.productId);
   };
 
-  const handleRemoveFromCart = () => {
-    removeFromCart(product.productId);
+  const handleRemoveFromWishlist = () => {
+    removeFromWishlist(product.productId);
   };
 
   return (
@@ -41,7 +41,6 @@ const CartItem: React.FC<CartItemProps> = ({ product, quantity, subtotal }) => {
       />
       <div className="cart-item__info">
         <h5>{product.name}</h5>
-        <p>Price: ${product.price.toFixed(2)}</p>
       </div>
       <div className="cart-item__quantity-controls">
         <Form.Group>
@@ -73,12 +72,9 @@ const CartItem: React.FC<CartItemProps> = ({ product, quantity, subtotal }) => {
           </div>
         </Form.Group>
       </div>
-      <div className="cart-item__subtotal">
-        Subtotal: ${subtotal.toFixed(2)}
-      </div>
 
       <i
-        onClick={handleRemoveFromCart}
+        onClick={handleRemoveFromWishlist}
         id="cart-icon"
         className="bi bi-trash"
       ></i>
@@ -86,4 +82,4 @@ const CartItem: React.FC<CartItemProps> = ({ product, quantity, subtotal }) => {
   );
 };
 
-export default CartItem;
+export default WishlistItem;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Col, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../services/cart-service";
+import { useOrderService } from "../../services/order-service";
 import "./payment-form.scss";
 
 interface Errors {
@@ -19,8 +19,9 @@ const PaymentForm = () => {
   const [cardType, setCardType] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [showModal, setShowModal] = useState(false);
-  const { clearCart } = useCart();
   const navigate = useNavigate();
+  const { createOrder } = useOrderService(); // Obtiene la función para crear órdenes del servicio de órdenes
+
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
 
@@ -131,7 +132,7 @@ const PaymentForm = () => {
     setCvv(value.slice(0, length).replace(/\D/g, ""));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const today = new Date();
     const [expMonth, expYear] = expirationDate.split("/");
@@ -162,14 +163,31 @@ const PaymentForm = () => {
     }
 
     if (Object.keys(newErrors).length === 0) {
-      setShowModal(true);
-      clearCart();
-      setErrors({});
+      try {
+        // Envía los datos del formulario al backend para crear la orden
+        await createOrder({
+          address: "", // Agrega los datos de la dirección del usuario si es necesario
+          address2: "",
+          province: "",
+          canton: "",
+          district: "",
+          zipCode: 0,
+          creditCard: {
+            cardNumber,
+            cardHolderName,
+            expirationDate,
+            cvv,
+          },
+        });
+        setShowModal(true);
+        setErrors({});
+      } catch (error) {
+        console.error("Error creating order:", error);
+      }
     } else {
       setErrors(newErrors);
     }
   };
-
   const handleCloseModal = () => {
     setShowModal(false);
     navigate("/");

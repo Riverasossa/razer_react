@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { Product } from "../../models/product";
 import { useCart } from "../../services/cart-service";
 import { useAuth } from "../../services/auth-service";
+import { useWishlist } from "../../services/wishlist-service";
+import { useRecoilState } from "recoil";
+import { wishlistState, WishlistItem } from "../../states/wishlist-state";
 
 import "./card-list.scss";
 
@@ -13,7 +16,27 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [wishlist] = useRecoilState(wishlistState);
+  const { addToWishlist, removeFromWishlist, fetchWishlist } = useWishlist();
 
+  useEffect(() => {
+    // revisa si existe el producto en la wishlist
+    const item: WishlistItem | undefined = Object.values(wishlist).find(
+      (item) => item.product.productId === product.productId
+    );
+    setIsWishlisted(!!item); // fillea el corazon o lo vacia
+  }, [wishlist, product.productId]);
+
+  const handleWishlistToggle = async () => {
+    if (isWishlisted) {
+      await removeFromWishlist(product.productId);
+    } else {
+      await addToWishlist(product.productId);
+    }
+    // actualiza la lista de wishlist
+    fetchWishlist();
+  };
   const handleAddToCart = () => {
     if (!product) {
       console.log("Product is empty");
@@ -43,13 +66,15 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
 
   return (
     <Card id="list-card" className="product-card">
-      <Card.Img
-        id="list-card-img"
-        variant="top"
-        src={product.image}
-        className="product-image"
-        alt="product-image"
-      />
+      <div className="image-container">
+        <Card.Img alt="product-image" variant="top" src={`${product.image}`} />
+        <i
+          className={`bi ${
+            isWishlisted ? "bi-bookmark-heart-fill" : "bi-bookmark-heart"
+          } heart-icon`}
+          onClick={handleWishlistToggle}
+        ></i>
+      </div>
       <Card.Body id="list-card-body" className="d-flex flex-column">
         <div>
           <Card.Title>{product.name}</Card.Title>

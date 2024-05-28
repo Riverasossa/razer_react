@@ -5,6 +5,8 @@ import LocationService, {
   Canton,
   District,
 } from "../../services/location-service";
+import { Checkout } from "../../models/checkout";
+import { useOrderService } from "../../services/order-service";
 
 import "./shipping-form.scss";
 
@@ -31,6 +33,7 @@ const ShippingForm: React.FC<ShippingFormProps> = ({ onNext }) => {
   const [address2, setAddress2] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [errors, setErrors] = useState<Errors>({});
+  const { createOrder } = useOrderService(); // Obtén la función para enviar los datos de envío al backend
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -89,7 +92,7 @@ const ShippingForm: React.FC<ShippingFormProps> = ({ onNext }) => {
     setZipCode(zip.substring(0, 5));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const newErrors: Errors = {};
     if (!address1) newErrors.address1 = "Please enter an address.";
     if (!selectedProvince) newErrors.province = "Please select a province.";
@@ -102,8 +105,31 @@ const ShippingForm: React.FC<ShippingFormProps> = ({ onNext }) => {
     }
 
     if (Object.keys(newErrors).length === 0) {
-      onNext();
-      setErrors({});
+      try {
+        // Crear un objeto para creditCard, aunque esté vacío
+        const checkoutData: Checkout = {
+          address: address1,
+          address2,
+          province: selectedProvince,
+          canton: selectedCanton,
+          district: selectedDistrict,
+          zipCode: parseInt(zipCode),
+          creditCard: {
+            cardNumber: "",
+            cardHolderName: "",
+            expirationDate: "",
+            cvv: "",
+          },
+        };
+
+        // Envia los datos de envío al backend
+        await createOrder(checkoutData);
+        onNext();
+        setErrors({});
+      } catch (error) {
+        console.error("Error creating order:", error);
+        // Maneja el error apropiadamente (por ejemplo, muestra un mensaje al usuario)
+      }
     } else {
       setErrors(newErrors);
     }
