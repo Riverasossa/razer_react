@@ -37,7 +37,7 @@ const Header = () => {
         <Link to={"/"} className="navbar-brand">
           <img src="../images/logo/razer-ths-logo.svg" alt="Razer Logo" />
         </Link>
-        {isAuthenticated && (
+        {isAuthenticated && user.role.name === "USER" && (
           <div className="shopping-cart-container">
             <Link to="/cart" className="btn p-0" aria-label="cart">
               <i id="cart-icon" className="bi bi-cart3"></i>

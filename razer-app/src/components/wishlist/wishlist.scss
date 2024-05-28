@@ -1,0 +1,20 @@
+.wishlist-content {
+  margin-top: 85px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.wishlist-title {
+  color: $card-content-title-color;
+}
+
+.wishlist-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wishlist-btn {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 25px;
+}

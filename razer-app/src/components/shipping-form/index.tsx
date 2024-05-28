@@ -5,13 +5,12 @@ import LocationService, {
   Canton,
   District,
 } from "../../services/location-service";
-import { Checkout } from "../../models/checkout";
-import { useOrderService } from "../../services/order-service";
+import { ShippingData } from "../../models/shipping";
 
 import "./shipping-form.scss";
 
 interface ShippingFormProps {
-  onNext: () => void;
+  onNext: (data: ShippingData) => void;
 }
 
 interface Errors {
@@ -33,8 +32,6 @@ const ShippingForm: React.FC<ShippingFormProps> = ({ onNext }) => {
   const [address2, setAddress2] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [errors, setErrors] = useState<Errors>({});
-  const { createOrder } = useOrderService(); // Obtén la función para enviar los datos de envío al backend
-
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
@@ -107,28 +104,18 @@ const ShippingForm: React.FC<ShippingFormProps> = ({ onNext }) => {
     if (Object.keys(newErrors).length === 0) {
       try {
         // Crear un objeto para creditCard, aunque esté vacío
-        const checkoutData: Checkout = {
+        const shippingData: ShippingData = {
           address: address1,
           address2,
           province: selectedProvince,
           canton: selectedCanton,
           district: selectedDistrict,
           zipCode: parseInt(zipCode),
-          creditCard: {
-            cardNumber: "",
-            cardHolderName: "",
-            expirationDate: "",
-            cvv: "",
-          },
         };
-
-        // Envia los datos de envío al backend
-        await createOrder(checkoutData);
-        onNext();
+        onNext(shippingData);
         setErrors({});
       } catch (error) {
         console.error("Error creating order:", error);
-        // Maneja el error apropiadamente (por ejemplo, muestra un mensaje al usuario)
       }
     } else {
       setErrors(newErrors);

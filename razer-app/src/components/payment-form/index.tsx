@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Form, Button, Col, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useOrderService } from "../../services/order-service";
+import { PaymentData } from "../../models/payment";
 import "./payment-form.scss";
+
+interface PaymentFormProps {
+  onNext: (data: PaymentData) => void;
+}
 
 interface Errors {
   cardNumber?: string;
@@ -11,7 +15,7 @@ interface Errors {
   cvv?: string;
 }
 
-const PaymentForm = () => {
+const PaymentForm: React.FC<PaymentFormProps> = ({ onNext }) => {
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
@@ -20,8 +24,6 @@ const PaymentForm = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const { createOrder } = useOrderService(); // Obtiene la función para crear órdenes del servicio de órdenes
-
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
 
@@ -163,31 +165,20 @@ const PaymentForm = () => {
     }
 
     if (Object.keys(newErrors).length === 0) {
-      try {
-        // Envía los datos del formulario al backend para crear la orden
-        await createOrder({
-          address: "", // Agrega los datos de la dirección del usuario si es necesario
-          address2: "",
-          province: "",
-          canton: "",
-          district: "",
-          zipCode: 0,
-          creditCard: {
-            cardNumber,
-            cardHolderName,
-            expirationDate,
-            cvv,
-          },
-        });
-        setShowModal(true);
-        setErrors({});
-      } catch (error) {
-        console.error("Error creating order:", error);
-      }
+      const paymentData: PaymentData = {
+        cardNumber,
+        cardHolderName,
+        expirationDate,
+        cvv,
+      };
+      onNext(paymentData);
+      setErrors({});
+      setShowModal(true);
     } else {
       setErrors(newErrors);
     }
   };
+
   const handleCloseModal = () => {
     setShowModal(false);
     navigate("/");

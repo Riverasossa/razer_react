@@ -49,6 +49,7 @@
 
 .login-card form button {
   width: 100%;
+  margin-top: 40px;
 }
 
 .alert-danger {
@@ -74,4 +75,17 @@
 
 .modal-dialog {
   margin-top: 300px;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  cursor: pointer;
+  color: $card-content-title-color;
 }

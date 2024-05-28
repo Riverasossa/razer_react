@@ -12,11 +12,22 @@ const Signup: React.FC = () => {
     password: "",
     confirmPassword: "",
   });
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const togglePasswordVisibility = (field: "password" | "confirmPassword") => {
+    if (field === "password") {
+      setPasswordVisible((prev) => !prev);
+    } else if (field === "confirmPassword") {
+      setConfirmPasswordVisible((prev) => !prev);
+    }
   };
 
   const validateEmail = (email: string): boolean => {
@@ -111,24 +122,40 @@ const Signup: React.FC = () => {
 
           <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-            />
+            <div className="password-input-container">
+              <Form.Control
+                type={passwordVisible ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+              />
+              <i
+                className={`password-toggle-icon bi ${
+                  passwordVisible ? "bi-eye-slash-fill" : "bi-eye-fill"
+                }`}
+                onClick={() => togglePasswordVisibility("password")}
+              />
+            </div>
           </Form.Group>
 
           <Form.Group controlId="confirmPassword">
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
-              required
-            />
+            <div className="password-input-container">
+              <Form.Control
+                type={confirmPasswordVisible ? "text" : "password"}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+                required
+              />
+              <i
+                className={`password-toggle-icon bi ${
+                  confirmPasswordVisible ? "bi-eye-slash-fill" : "bi-eye-fill"
+                }`}
+                onClick={() => togglePasswordVisibility("confirmPassword")}
+              />
+            </div>
           </Form.Group>
 
           {error && <Alert variant="danger">{error}</Alert>}

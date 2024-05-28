@@ -9,8 +9,8 @@ import CheckoutPage from "./views/checkout-page";
 import BackofficePage from "./views/backoffice-page";
 import UpdateProductPage from "./views/update-product-page";
 import WishlistPage from "./views/wishlist-page";
-import UserOrdersPage from "./views/user-orders-page"; /* 
-import AddProductPage from "./views/add-product-page"; */
+import UserOrdersPage from "./views/user-orders-page";
+import AddProductPage from "./views/add-product-page";
 
 const App = () => {
   return (
@@ -27,8 +27,7 @@ const App = () => {
         path="/backoffice/products/edit/:id"
         element={<UpdateProductPage />}
       />
-      {/* 
-      <Route path="/backoffice/products/add" element={<AddProductPage />} /> */}
+      <Route path="/backoffice/products/add" element={<AddProductPage />} />
       <Route path="/backoffice/*" element={<BackofficePage />} />
       <Route path="/wishlist/*" element={<WishlistPage />} />
     </Routes>

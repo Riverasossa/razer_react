@@ -1,4 +1,4 @@
-/* import AddProduct from "../../components/add-product";
+import AddProduct from "../../components/add-product";
 
 const AddProductPage = () => {
   return (
@@ -9,4 +9,3 @@ const AddProductPage = () => {
 };
 
 export default AddProductPage;
- */

@@ -38,12 +38,8 @@ const ProductListPage: React.FC = () => {
         const matchesCategory =
           selectedCategories.length === 0 ||
           selectedCategories.includes(product.category);
-        /* const matchesPriceRange =
-          selectedPriceRanges.length === 0 ||
-          selectedPriceRanges.some((rangeIndex) =>
-            checkPriceRange(product.price, rangeIndex)
-          ); */
-        return matchesSearch && matchesCategory /* && matchesPriceRange */;
+
+        return matchesSearch && matchesCategory;
       });
       setFilteredProducts(filtered);
       setNoProductsFound(filtered.length === 0);
@@ -71,11 +67,12 @@ const ProductListPage: React.FC = () => {
     setPageNumber(0);
   };
 
-  const handlePriceFilter = (priceRangeIndex: number) => {
-    const updatedPriceRanges = selectedPriceRanges.includes(priceRangeIndex)
-      ? selectedPriceRanges.filter((p) => p !== priceRangeIndex)
-      : [...selectedPriceRanges, priceRangeIndex];
-    setSelectedPriceRanges(updatedPriceRanges);
+  const handlePriceFilter = (minPrice: number, maxPrice: number) => {
+    const filtered = products.filter((product) => {
+      return product.price >= minPrice && product.price <= maxPrice;
+    });
+    setFilteredProducts(filtered);
+    setNoProductsFound(filtered.length === 0);
     setPageNumber(0);
   };
 
@@ -89,18 +86,6 @@ const ProductListPage: React.FC = () => {
   const handlePageChange = ({ selected }: { selected: number }) => {
     setPageNumber(selected);
   };
-
-  /* const checkPriceRange = (price: string, rangeIndex: number) => {
-    const numericPrice = parseFloat(price.replace("$", "").replace(",", ""));
-    const priceRanges = [
-      { min: 0, max: 25 },
-      { min: 25, max: 50 },
-      { min: 50, max: 100 },
-      { min: 100, max: Infinity },
-    ];
-    const priceRange = priceRanges[rangeIndex];
-    return numericPrice >= priceRange.min && numericPrice < priceRange.max;
-  }; */
 
   return (
     <>

@@ -65,6 +65,7 @@ const AdminProducts = () => {
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Category</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -74,6 +75,7 @@ const AdminProducts = () => {
               <td>{product.productId}</td>
               <td>
                 <a
+                  className="product-name"
                   onClick={() =>
                     navigate(`/product-details/${product.productId}`)
                   }
@@ -82,17 +84,16 @@ const AdminProducts = () => {
                 </a>
               </td>
               <td>{product.price}</td>
+              <td>{product.category}</td>
               <td>
                 <i
                   className="bi bi-pencil-fill me-2"
-                  style={{ cursor: "pointer" }}
                   onClick={() =>
                     navigate(`/backoffice/products/edit/${product.productId}`)
                   }
                 ></i>
                 <i
                   className="bi bi-trash-fill"
-                  style={{ cursor: "pointer", color: "red" }}
                   onClick={() => handleDelete(product.productId)}
                 ></i>
               </td>

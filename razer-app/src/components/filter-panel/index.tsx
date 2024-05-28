@@ -1,11 +1,11 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import { Form, Button } from "react-bootstrap";
 import "./filter-panel.scss";
 
 interface FilterPanelProps {
   handleSearch: (term: string) => void;
   handleCategoryFilter: (category: string) => void;
-  handlePriceFilter: (priceRangeIndex: number) => void;
+  handlePriceFilter: (minPrice: number, maxPrice: number) => void;
   handleClearFilters: () => void;
   setPageNumber: (pageNumber: number) => void;
   categories: string[];
@@ -20,19 +20,31 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   categories,
 }) => {
   const [searchValue, setSearchValue] = useState("");
-  const [selectedCategoriesInternal, setSelectedCategoriesInternal] = useState<
-    string[]
-  >([]);
-  const [selectedPriceRangesInternal, setSelectedPriceRangesInternal] =
-    useState<number[]>([]);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const clearFilters = () => {
     handleClearFilters();
     setSearchValue("");
-    setSelectedCategoriesInternal([]);
-    setSelectedPriceRangesInternal([]);
+    setMinPrice("");
+    setMaxPrice("");
     setPageNumber(0);
   };
+
+  const handleFilterPrice = () => {
+    const min = parseFloat(minPrice);
+    const max = parseFloat(maxPrice);
+
+    if (!isNaN(min) && !isNaN(max) && min <= max) {
+      handlePriceFilter(min, max);
+    } else {
+      console.error("Invalid price range");
+    }
+  };
+
+  useEffect(() => {
+    handleFilterPrice();
+  }, [minPrice, maxPrice]);
 
   return (
     <div className="filter-panel">
@@ -60,18 +72,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                     key={index}
                     type="checkbox"
                     label={category}
-                    value={category}
-                    checked={selectedCategoriesInternal.includes(category)}
-                    onChange={(e) => {
-                      handleCategoryFilter(e.target.value);
-                      setSelectedCategoriesInternal(
-                        selectedCategoriesInternal.includes(e.target.value)
-                          ? selectedCategoriesInternal.filter(
-                              (c) => c !== e.target.value
-                            )
-                          : [...selectedCategoriesInternal, e.target.value]
-                      );
-                    }}
+                    onChange={() => handleCategoryFilter(category)}
                   />
                 ))}
             </div>
@@ -79,32 +80,19 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           <Form.Group controlId="formPriceFilter">
             <Form.Label className="filter-panel__label">PRICE:</Form.Label>
             <div className="filter-panel__options">
-              {["$0 - $25", "$25 - $50", "$50 - $100", "$100 or Above"].map(
-                (priceRange, index) => (
-                  <Form.Check
-                    key={index}
-                    type="checkbox"
-                    label={priceRange}
-                    value={index}
-                    checked={selectedPriceRangesInternal.includes(index)}
-                    onChange={(e) => {
-                      handlePriceFilter(parseInt(e.target.value));
-                      setSelectedPriceRangesInternal(
-                        selectedPriceRangesInternal.includes(
-                          parseInt(e.target.value)
-                        )
-                          ? selectedPriceRangesInternal.filter(
-                              (p) => p !== parseInt(e.target.value)
-                            )
-                          : [
-                              ...selectedPriceRangesInternal,
-                              parseInt(e.target.value),
-                            ]
-                      );
-                    }}
-                  />
-                )
-              )}
+              <Form.Control
+                type="number"
+                placeholder="Min"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+              />
+              <span className="filter-panel__price-separator">-</span>
+              <Form.Control
+                type="number"
+                placeholder="Max"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+              />
             </div>
           </Form.Group>
         </div>

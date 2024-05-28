@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Table, Pagination } from "react-bootstrap";
+import { Table, Pagination, Modal, Button } from "react-bootstrap";
 import { useOrderService } from "../../services/order-service";
 import { Order } from "../../models/order";
 import "./user-orders.scss";
@@ -8,6 +8,8 @@ const UserOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [ordersPerPage] = useState(10);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [showModal, setShowModal] = useState(false);
   const orderService = useOrderService();
 
   useEffect(() => {
@@ -43,13 +45,23 @@ const UserOrders = () => {
     }
   };
 
+  const handleViewOrderDetails = (order: Order) => {
+    setSelectedOrder(order);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedOrder(null);
+  };
+
   const formatDateString = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString();
   };
 
   return (
-    <div>
+    <div className="orders">
       <h1 className="table-title">Your Orders</h1>
       <Table striped bordered hover>
         <thead>
@@ -60,6 +72,7 @@ const UserOrders = () => {
             <th>Shipping Cost</th>
             <th>Total</th>
             <th>Date</th>
+            <th>Actions</th> {/* Nueva columna de acciones */}
           </tr>
         </thead>
         <tbody>
@@ -71,6 +84,13 @@ const UserOrders = () => {
               <td>{order.shippingCoast}</td>
               <td>{order.total}</td>
               <td>{formatDateString(order.orderDate)}</td>
+              <td>
+                <i
+                  className="bi bi-eye-fill"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleViewOrderDetails(order)}
+                />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -94,6 +114,58 @@ const UserOrders = () => {
           disabled={currentPage === totalPages}
         />
       </Pagination>
+
+      <Modal
+        className="order-details"
+        show={showModal}
+        onHide={handleCloseModal}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Order Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedOrder && (
+            <div>
+              <p>
+                <strong>Order N.º:</strong> {selectedOrder.orderId}
+              </p>
+              <p>
+                <strong>Date:</strong>{" "}
+                {formatDateString(selectedOrder.orderDate)}
+              </p>
+              <p>
+                <strong>Status:</strong> {selectedOrder.status}
+              </p>
+              <p>
+                <strong>Taxes:</strong> {selectedOrder.taxes}
+              </p>
+              <p>
+                <strong>Shipping Cost:</strong> {selectedOrder.shippingCoast}
+              </p>
+              <p>
+                <strong>Total:</strong> {selectedOrder.total}
+              </p>
+              <p>
+                <strong>Products:</strong>
+              </p>
+              <ul>
+                {selectedOrder.orderProducts.map((orderProduct) => (
+                  <li key={orderProduct.orderProductId}>
+                    {orderProduct.product.name} - Price: $
+                    {orderProduct.product.price}, Quantity:{" "}
+                    {orderProduct.quantity}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

@@ -14,6 +14,7 @@ const Login: React.FC = () => {
   });
   const [error, setError] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +24,7 @@ const Login: React.FC = () => {
   const handleLogin = async () => {
     try {
       await login(formData);
-      setShowModal(true);
+      navigate("/");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message || "Error logging in. Please try again.");
@@ -36,6 +37,10 @@ const Login: React.FC = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     navigate("/");
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -69,13 +74,21 @@ const Login: React.FC = () => {
 
           <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-            />
+            <div className="password-input-container">
+              <Form.Control
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+              />
+              <i
+                className={`bi ${
+                  showPassword ? "bi-eye-slash-fill" : "bi-eye-fill"
+                } password-toggle-icon`}
+                onClick={togglePasswordVisibility}
+              />
+            </div>
           </Form.Group>
           {error && <Alert variant="danger">{error}</Alert>}
 

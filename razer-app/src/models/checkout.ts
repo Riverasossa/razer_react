@@ -1,4 +1,4 @@
-export interface Checkout {
+export interface CheckoutData {
     address: string;
     address2: string;
     province: string;

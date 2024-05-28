@@ -12,7 +12,6 @@ const UpdateProduct = () => {
   const auth = useRecoilValue(authState);
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
-  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -36,21 +35,10 @@ const UpdateProduct = () => {
     }
   };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
-    }
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (product && id) {
       const updatedProduct: Product = { ...product };
-
-      if (file) {
-        const formData = new FormData();
-        formData.append("file", file);
-      }
 
       await ProductService.updateProduct(
         Number(id),
@@ -114,8 +102,14 @@ const UpdateProduct = () => {
         </Form.Group>
 
         <Form.Group controlId="productImage">
-          <Form.Label>Image</Form.Label>
-          <Form.Control type="file" onChange={handleFileChange} />
+          <Form.Label>Image Url</Form.Label>
+          <Form.Control
+            type="textarea"
+            name="image"
+            value={product.image}
+            onChange={handleInputChange}
+            required
+          />
         </Form.Group>
 
         <Button variant="primary" type="submit">

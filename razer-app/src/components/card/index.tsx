@@ -13,22 +13,18 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const { addToWishlist, removeFromWishlist, fetchWishlist } = useWishlist();
 
   useEffect(() => {
-    // Check if the product is already in the wishlist
     const item: WishlistItem | undefined = Object.values(wishlist).find(
       (item) => item.product.productId === product.productId
     );
-    setIsWishlisted(!!item); // Set the heart fill status based on whether the product is in the wishlist
+    setIsWishlisted(!!item);
   }, [wishlist, product.productId]);
 
   const handleWishlistToggle = async () => {
     if (isWishlisted) {
-      // Remove the product from the wishlist
       await removeFromWishlist(product.productId);
     } else {
-      // Add the product to the wishlist
       await addToWishlist(product.productId);
     }
-    // Fetch the updated wishlist after adding/removing the product
     fetchWishlist();
   };
 

@@ -3,6 +3,7 @@ import { Button, Alert } from "react-bootstrap";
 import WishlistItem from "../wishlist-item";
 import { useCart } from "../../services/cart-service";
 import { useWishlist } from "../../services/wishlist-service";
+import "./wishlist.scss";
 
 const Wishlist: React.FC = () => {
   const { wishlist, clearWishlist, fetchWishlist } = useWishlist();
@@ -36,8 +37,16 @@ const Wishlist: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Wishlist</h1>
+    <div className="wishlist-content">
+      <div className="wishlist-header">
+        <h1 className="wishlist-title">Wishlist</h1>
+        <div className="wishlist-btn">
+          <Button variant="danger" onClick={handleClearWishlist}>
+            Clear Wishlist
+          </Button>
+          <Button onClick={handleAddAllToCart}>Add All to Cart</Button>
+        </div>
+      </div>
       {Object.values(wishlist).map((item) => (
         <WishlistItem
           key={item.product.productId}
@@ -45,8 +54,6 @@ const Wishlist: React.FC = () => {
           quantity={item.quantity}
         />
       ))}
-      <Button onClick={handleClearWishlist}>Clear Wishlist</Button>
-      <Button onClick={handleAddAllToCart}>Add All to Cart</Button>
     </div>
   );
 };
