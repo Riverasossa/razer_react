@@ -23,7 +23,7 @@ const ProductDetailsPage = () => {
 
         const products = await ProductService.getProducts();
         const foundProduct = products.find(
-          (product) => product.id === parseInt(id)
+          (product) => product.productId === parseInt(id)
         );
 
         if (foundProduct) {
@@ -50,12 +50,12 @@ const ProductDetailsPage = () => {
       return;
     }
 
-    const isInCart = cart[product.id] !== undefined;
+    const isInCart = cart[product.productId] !== undefined;
 
     if (isInCart) {
       setModalMessage("The product is already in the cart.");
     } else {
-      addToCart(product);
+      addToCart(product.productId); // Llama a addToCart con el productId
       setModalMessage("Product added to cart!");
     }
 
@@ -83,7 +83,7 @@ const ProductDetailsPage = () => {
 
       <div className="info-details-container">
         <h2 id="product-name-details">{product.name}</h2>
-        <p>{product.summary}</p>
+        <p>{product.description}</p>
         <p>
           <strong>Category:</strong> {product.category}
         </p>
@@ -95,8 +95,6 @@ const ProductDetailsPage = () => {
           ADD TO CART
         </Button>
       </div>
-
-      {/* Modal */}
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>{modalMessage}</Modal.Title>

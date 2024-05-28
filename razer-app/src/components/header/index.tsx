@@ -1,19 +1,35 @@
-import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  Container,
+  Dropdown,
+  DropdownDivider,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authState } from "../../states/auth-state";
+import { userState } from "../../states/user-state";
 import { useCart } from "../../services/cart-service";
 import "./header.scss";
 
 const Header = () => {
-  const { isAuthenticated, user } = useRecoilValue(authState);
+  const { isAuthenticated } = useRecoilValue(authState);
   const [, setAuth] = useRecoilState(authState);
+  const user = useRecoilValue(userState);
   const { clearCart } = useCart();
+  const [, setUser] = useRecoilState(userState);
 
   const logout = () => {
-    setAuth({ isAuthenticated: false, user: null });
+    setAuth({ isAuthenticated: false, token: null });
+    setUser({
+      fullName: "",
+      email: "",
+      role: "",
+    });
     clearCart();
   };
+
+  console.log("User Role:", user.role);
 
   return (
     <Navbar expand="lg" variant="light" className="navbar-custom">
@@ -62,9 +78,28 @@ const Header = () => {
                   variant="dark"
                   id="dropdown-basic"
                 >
-                  <i className="bi bi-person-fill"></i> {user.name}
+                  <i className="bi bi-person-fill"></i> {user.fullName}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
+                  {user.role.name === "SUPER_ADMIN" && (
+                    <Nav.Link
+                      as={Link}
+                      to={"/backoffice/products"}
+                      className="navbar-custom__link"
+                    >
+                      Backoffice
+                    </Nav.Link>
+                  )}
+                  {user.role.name === "USER" && (
+                    <Nav.Link
+                      as={Link}
+                      to={"/user-orders"}
+                      className="navbar-custom__link"
+                    >
+                      Orders
+                    </Nav.Link>
+                  )}
+                  <DropdownDivider />
                   <Dropdown.Item as={Link} to={"/"} onClick={logout}>
                     Logout
                   </Dropdown.Item>

@@ -1,0 +1,23 @@
+.sidebar {
+  background-color: $card-content-background-image-color;
+  padding: 20px;
+  width: 190px;
+  margin-top: 70px;
+}
+
+.sidebar-title {
+  color: $card-content-description-color;
+}
+
+.sidebar .nav-link {
+  color: $card-icon-color;
+  font-size: 16px;
+}
+
+.sidebar .nav-link:hover {
+  color: $color-green;
+}
+
+.sidebar .nav-link.active {
+  font-weight: bold;
+}

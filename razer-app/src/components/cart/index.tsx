@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Alert } from "react-bootstrap";
 import { useCart } from "../../services/cart-service";
 import CartItem from "../cart-item";
@@ -6,12 +6,19 @@ import "./cart.scss";
 import { Link } from "react-router-dom";
 
 const Cart: React.FC = () => {
-  const { cart, clearCart } = useCart();
+  const { cart, clearCart, fetchCart } = useCart();
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
 
   const totalPrice = Object.values(cart)
     .reduce((total, item) => {
-      const price = parseFloat(item.product.price.replace(/[^0-9.]/g, ""));
-      return total + price * item.quantity;
+      if (item.product && item.product.price) {
+        const price = item.product.price;
+        return total + price * item.quantity;
+      }
+      return total;
     }, 0)
     .toFixed(2);
 
@@ -27,9 +34,17 @@ const Cart: React.FC = () => {
     <div className="cart-container">
       <h2 className="cart-container__title">Shopping Cart</h2>
       <div className="cart-container__items">
-        {Object.values(cart).map((item) => (
-          <CartItem key={item.product.id} product={item.product} />
-        ))}
+        {Object.values(cart).map(
+          (item) =>
+            item.product && (
+              <CartItem
+                key={item.product.productId}
+                product={item.product}
+                quantity={item.quantity}
+                subtotal={item.product.price * item.quantity}
+              />
+            )
+        )}
       </div>
       <div className="cart-container__total-price">
         <h4>Total Price: ${totalPrice}</h4>
@@ -39,7 +54,6 @@ const Cart: React.FC = () => {
           CLEAR CART
         </Button>
         <Link to="/checkout">
-          {" "}
           <Button variant="primary">CHECKOUT</Button>
         </Link>
       </div>

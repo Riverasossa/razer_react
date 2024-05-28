@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { Form, Button, Alert, Modal } from "react-bootstrap";
 import { useAuth } from "../../services/auth-service";
 import { useNavigate } from "react-router-dom";
 import "./login.scss";
 import { User } from "../../models/user";
 
-const Login = () => {
+const Login: React.FC = () => {
   const { login } = useAuth();
   const [formData, setFormData] = useState<User>({
-    username: "",
+    email: "",
+    fullName: "",
     password: "",
   });
-  const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState<string>("");
+  const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -44,7 +45,7 @@ const Login = () => {
           <Modal.Title className="modal-bg">Login Successful</Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-bg">
-          <p>Welcome Back, {formData.username}!</p>
+          <p>Welcome Back, {formData.email}!</p>
         </Modal.Body>
         <Modal.Footer className="modal-bg">
           <Button variant="primary" onClick={handleCloseModal}>
@@ -55,12 +56,12 @@ const Login = () => {
       <div className="login-card">
         <h2 className="login-card__title">Login</h2>
         <Form>
-          <Form.Group controlId="username">
-            <Form.Label>Username</Form.Label>
+          <Form.Group controlId="email">
+            <Form.Label>Email</Form.Label>
             <Form.Control
               type="text"
-              name="username"
-              value={formData.username}
+              name="email"
+              value={formData.email}
               onChange={handleInputChange}
               required
             />
@@ -82,6 +83,15 @@ const Login = () => {
             Login
           </Button>
         </Form>
+        <p className="login-card__text">
+          Don't have an account?{" "}
+          <span
+            className="login-card__link"
+            onClick={() => navigate("/signup")}
+          >
+            Sign Up
+          </span>
+        </p>
       </div>
     </div>
   );

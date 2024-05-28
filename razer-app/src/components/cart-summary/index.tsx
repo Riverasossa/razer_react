@@ -1,15 +1,20 @@
+import React, { useEffect } from "react";
 import { useCart } from "../../services/cart-service";
 import "./cart-summary.scss";
 
 const CartSummary = () => {
-  const { cart } = useCart();
+  const { cart, fetchCart } = useCart();
 
-  const calculateSubtotal = (quantity: number, price: string) => {
-    return quantity * parseFloat(price.replace(/[^0-9.]/g, ""));
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  const calculateSubtotal = (quantity: number, price: number) => {
+    return quantity * price;
   };
 
   const calculateTotal = () => {
-    const subtotal = Object.values(cart).reduce(
+    const subtotal = cart.reduce(
       (acc, item) => acc + calculateSubtotal(item.quantity, item.product.price),
       0
     );
@@ -28,8 +33,8 @@ const CartSummary = () => {
     <div className="cart-summary">
       <h3>Cart Summary</h3>
       <div className="product-list">
-        {Object.values(cart).map((item) => (
-          <div key={item.product.id} className="product-item">
+        {cart.map((item) => (
+          <div key={item.shoppingCartProductId} className="product-item">
             <div className="product-info">
               <img
                 src={item.product.image}

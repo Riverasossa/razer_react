@@ -24,8 +24,8 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       </div>
       <Card.Body>
         <Card.Title id="product-name">{product.name}</Card.Title>
-        <Card.Text>{product.summary}</Card.Text>
-        <Link to={`/product-details/${product.id}`}>
+        <Card.Text>{product.description}</Card.Text>
+        <Link to={`/product-details/${product.productId}`}>
           <Button id="carousel-btn" variant="primary">
             VIEW DETAILS
           </Button>

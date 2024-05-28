@@ -25,12 +25,12 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       return;
     }
 
-    const isInCart = cart[product.id] !== undefined;
+    const isInCart = cart[product.productId] !== undefined;
 
     if (isInCart) {
       setModalMessage("The product is already in the cart.");
     } else {
-      addToCart(product);
+      addToCart(product.productId);
       setModalMessage("Product added to cart!");
     }
 
@@ -53,11 +53,11 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       <Card.Body id="list-card-body" className="d-flex flex-column">
         <div>
           <Card.Title>{product.name}</Card.Title>
-          <Card.Text>{product.summary}</Card.Text>
+          <Card.Text>{product.description}</Card.Text>
           <Card.Text>${product.price}</Card.Text>
         </div>
         <div className="card-btn-container">
-          <Link to={`/product-details/${product.id}`}>
+          <Link to={`/product-details/${product.productId}`}>
             <Button variant="primary">VIEW DETAILS</Button>
           </Link>
           <Button id="card-btn" variant="primary" onClick={handleAddToCart}>

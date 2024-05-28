@@ -1,4 +1,3 @@
-import React from "react";
 import ProductDetailsPage from "../../components/product-details";
 import ProductsCarousel from "../../components/carousel";
 

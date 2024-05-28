@@ -4,33 +4,32 @@ import { useCart } from "../../services/cart-service";
 import "./cart-item.scss";
 import { Product } from "../../models/product";
 
-const CartItem: React.FC<{ product: Product }> = ({ product }) => {
-  const { updateCartItem, removeFromCart } = useCart();
-  const { cart } = useCart();
-  const item = cart[product.id];
-  const quantity = item?.quantity || 0;
-  const subtotal =
-    (item?.quantity || 0) * parseFloat(product.price.replace(",", ""));
+interface CartItemProps {
+  product: Product;
+  quantity: number;
+  subtotal: number;
+}
+
+const CartItem: React.FC<CartItemProps> = ({ product, quantity, subtotal }) => {
+  const { addToCart, decreaseProductQuantity, removeFromCart } = useCart();
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     if (!isNaN(value) && value >= 0) {
-      updateCartItem(product.id, value);
+      // Implementa la lógica de actualización del carrito aquí
     }
   };
 
   const incrementQuantity = () => {
-    updateCartItem(product.id, quantity + 1);
+    addToCart(product.productId);
   };
 
   const decrementQuantity = () => {
-    if (quantity > 1) {
-      updateCartItem(product.id, quantity - 1);
-    }
+    decreaseProductQuantity(product.productId);
   };
 
   const handleRemoveFromCart = () => {
-    removeFromCart(product.id);
+    removeFromCart(product.productId);
   };
 
   return (
@@ -42,7 +41,7 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
       />
       <div className="cart-item__info">
         <h5>{product.name}</h5>
-        <p>Price: ${product.price}</p>
+        <p>Price: ${product.price.toFixed(2)}</p>
       </div>
       <div className="cart-item__quantity-controls">
         <Form.Group>
@@ -52,6 +51,7 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
               variant="outline-success"
               onClick={decrementQuantity}
               className="quantity-control"
+              disabled={quantity <= 1}
             >
               -
             </Button>

@@ -1,0 +1,56 @@
+.orders-container {
+  display: flex;
+}
+
+.orders-content {
+  margin-left: 250px;
+  padding: 20px;
+  width: calc(100% - 250px);
+}
+
+.pagination {
+  justify-content: center;
+  display: flex;
+  gap: 0;
+  margin-bottom: 0;
+  padding-bottom: 20px;
+}
+
+.active > .page-link,
+.page-link.active {
+  background-color: $color-green;
+  border-color: $color-green;
+  color: black;
+
+  border-color: transparent;
+}
+
+.page-item:first-child .page-link {
+  background-color: $card-content-background-color;
+  border-color: transparent;
+  color: $card-content-description-color;
+}
+
+.page-item:last-child .page-link {
+  background-color: $card-content-background-color;
+  border-color: transparent;
+  color: $card-content-description-color;
+}
+
+.page-link:hover {
+  z-index: 2;
+  color: #000000;
+  background-color: $color-green;
+  border-color: transparent;
+}
+
+.page-link {
+  color: $card-content-description-color;
+  background-color: $card-content-background-color;
+  border: none;
+}
+
+.order-dropdown {
+  margin: 0;
+  width: fit-content;
+}

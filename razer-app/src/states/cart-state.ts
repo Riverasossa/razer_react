@@ -1,10 +1,15 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
 import { Product } from "../models/product";
-import { recoilPersist } from 'recoil-persist'
 
-const { persistAtom } = recoilPersist()
+const { persistAtom } = recoilPersist();
 
-export const cartState = atom<{ [productId: number]: { product: Product; quantity: number } }>({
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}
+
+export const cartState = atom<Record<number, CartItem>>({
   key: "cartState",
   default: {},
   effects_UNSTABLE: [persistAtom],

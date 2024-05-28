@@ -1,0 +1,76 @@
+.table-title {
+  color: $card-content-title-color;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+#header-btn {
+  margin: 0;
+}
+
+.table {
+  border-color: $card-icon-color;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table > :not(caption) > * > * {
+  background-color: $card-content-background-color;
+  color: $card-content-title-color;
+  text-align: -webkit-center;
+}
+
+.dropdown-menu.show {
+  display: block;
+  min-width: auto;
+}
+
+.pagination {
+  justify-content: center;
+  display: flex;
+  gap: 0;
+  margin-bottom: 0;
+  padding-bottom: 20px;
+}
+
+.active > .page-link,
+.page-link.active {
+  background-color: $color-green;
+  border-color: $color-green;
+  color: black;
+
+  border-color: transparent;
+}
+
+.page-item:first-child .page-link {
+  background-color: $card-content-background-color;
+  border-color: transparent;
+  color: $card-content-description-color;
+}
+
+.page-item:last-child .page-link {
+  background-color: $card-content-background-color;
+  border-color: transparent;
+  color: $card-content-description-color;
+}
+
+.page-link:hover {
+  z-index: 2;
+  color: #000000;
+  background-color: $color-green;
+  border-color: transparent;
+}
+
+.page-link {
+  color: $card-content-description-color;
+  background-color: $card-content-background-color;
+  border: none;
+}
+
+.modal-body {
+  color: $card-content-description-color;
+  font-size: larger;
+}
